@@ -11,7 +11,7 @@ const LeftItem = ({ icon_name, label, dir }) => {
     <Link href={`/${dir}`}>
       <div>
         <i style={{ color: icon_name === "twitter" ? "#1DA1F2" : "" }}
-          className={`bi bi-${icon_name}${icon_name != "twitter" && currentPage ? '-fill' : ""}`}></i>
+          className={`bi bi-${icon_name}${(icon_name != "twitter" && icon_name != "hash") && currentPage ? '-fill' : ""}`}></i>
         {label && <span style={{ fontWeight: currentPage && "bolder" }}>
           {label}
         </span>}
@@ -42,7 +42,7 @@ export default function Left({ className }) {
         </div>
       </div>
 
-      <ProfileBadge />
+      <ProfileBadge className={styles.profileBadge}/>
 
     </nav>
   )

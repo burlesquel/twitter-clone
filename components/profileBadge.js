@@ -7,9 +7,11 @@ export default function ProfileBadge({className, followable=false}) {
     <Link href={"/profile"} >
 
     <div className={`${styles.profileContainer} ${className}`}>
+
       <div className={styles.profileImage}>
         <Image src={"https://pbs.twimg.com/profile_images/1514936411836850185/j1yCW-1V_bigger.jpg"} layout="fill" />
       </div>
+
       <div className={styles.userNames}>
         <span>
           Batu
@@ -18,6 +20,7 @@ export default function ProfileBadge({className, followable=false}) {
           @batumanav
         </span>
       </div>
+      
       {followable && 
       <div className={styles.followButton}>Follow</div>}
     </div>

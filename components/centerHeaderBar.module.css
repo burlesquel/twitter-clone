@@ -1,0 +1,25 @@
+.main{
+    z-index: 20;
+    position: sticky;
+    top:0;
+    background-color: white;
+    height: 3.1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display:flex; 
+    flex-direction:row; 
+    justify-content:space-between; 
+    align-items:center; 
+    background-color:rgba(255,255,255,.9); 
+    backdrop-filter:blur(8px)
+}
+
+.doubleHeight{
+    height: 6.2rem;
+}
+
+.explore_searchBar{
+    width: 90%;
+    margin-top: 2px;
+    margin-bottom:2px
+}

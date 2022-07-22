@@ -1,0 +1,83 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+    justify-content: space-around;
+}
+
+.main:hover {
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+
+.profilePicture {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+}
+
+.profilePicture>* {
+    width: 100%;
+    height: 100%;
+    border-radius: 10rem;
+    object-fit: contain;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 88%;
+    overflow-wrap: break-word;
+
+}
+
+.content>*:first-child>*:first-child {
+    /* NAME */
+    font-weight: 500;
+}
+
+.content>*:first-child>*:nth-child(2) {
+    /* USERNAME AND TIMESTAMP */
+    color: hsl(208, 6%, 42%);
+    font-weight: 300;
+}
+
+.content>*:nth-child(2) {
+    font-weight: 400;
+    font-size: .9rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.iconNumberContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.iconContainer{
+    display: flex;
+    height:2rem;
+    width: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.iconNumberContainer:hover .iconContainer{
+    background-color: #E1EEF6;
+}
+
+.iconNumberContainer:hover{
+    color: #7FC4F3;
+}
+
+.number{
+    font-size: small;
+}

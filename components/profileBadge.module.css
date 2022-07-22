@@ -54,8 +54,8 @@
     background-color: #272C30;
 }
 
-@media only screen and (max-width: 1280px) {
+/* @media only screen and (max-width: 1280px) {
     .userNames{
         display: none;
     }
-  }
+  } */

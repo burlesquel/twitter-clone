@@ -12,10 +12,10 @@
 .searchBarContainer{
     background-color: white;
     width: 70%;
+    height: 3.1rem;
     position: sticky;
     top: 0;
     padding-bottom: 5px;
-    padding-top: 5px;
     margin-bottom: 0;
 }
 

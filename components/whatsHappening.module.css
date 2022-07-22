@@ -1,0 +1,42 @@
+.main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px #f0f4f5 solid;
+}
+
+.inputAndPP{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+.profileImage{
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+}
+.profileImage > *{
+    border-radius: 2rem;
+}
+.input{
+    all:unset;
+    width: 89%;
+    font-size: large;
+}
+.button{
+    /* PASSIVE COLOR: #8ecdf8
+        ACTIVE: #1d9bf0
+        ACTIVE_HOVER: #1a8cd8
+    */
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    /* width: 14%; */
+    background-color: #1d9bf0;
+    margin-left: auto;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    color: white;
+    user-select: none;
+}
