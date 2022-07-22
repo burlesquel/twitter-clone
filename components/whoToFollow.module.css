@@ -1,0 +1,28 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-radius: 1rem;
+    background-color: #f7f9f9;;
+    width: 70%;
+}
+.main > h2{
+    font-size: x-large;
+    margin:.9rem;
+    margin-top: unset;
+}
+.eachProfile{
+    border-radius: unset;
+    justify-content: flex-start;
+    margin: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.mainSticky{
+    /* position: sticky;
+    bottom:0;
+    background-color: blueviolet; */
+}

@@ -1,0 +1,26 @@
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main > *{
+    margin-bottom: 1rem;
+}
+
+.searchBarContainer{
+    background-color: white;
+    width: 70%;
+    position: sticky;
+    top: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 1100px) {
+    .main > *{
+        width: 100%;
+    }
+  }

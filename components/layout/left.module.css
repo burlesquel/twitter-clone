@@ -1,0 +1,67 @@
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.nav>*:not(:first-child):not(:last-child) {
+    /* EACH NAVIGATION ITEM ON THE LEFT EXCEPT THE TWITTER BIRD AND TWEET BUTTON  */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    cursor: pointer;
+    width: fit-content;
+    padding: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    margin-bottom: .9rem;
+    transition: 200ms;
+}
+
+.nav>*:first-child {
+    /* TWITTER BIRD */
+    margin-left: 1rem;
+    margin-bottom: .5rem;
+    cursor: pointer;
+}
+
+.nav>*:not(:first-child):not(:last-child):hover {
+    /* ALL NAV ITEMS EXCEPT FIRST AND LAST */
+    background-color: #E7E7E8;
+    border-radius: 2rem;
+}
+
+.nav>*>i {
+    font-size: 1.5rem;
+    margin-right: .7rem;
+}
+
+.tweetButton {
+    background-color: #1DA1F2;
+    padding-top: .9rem;
+    padding-bottom: .9rem;
+    transition: 300ms;
+    cursor: pointer;
+    color: white;
+    width: 100%;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.tweetButton:hover {
+    background-color: hsl(204, 79%, 48%)
+}
+
+@media only screen and (max-width: 1280px) {
+    .nav>* > span{
+        display: none;
+        align-self: flex-end;
+    }
+  }
