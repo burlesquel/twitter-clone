@@ -1,0 +1,7 @@
+.main > *:not(h2){
+    border-bottom: 1px #f0f4f5 solid;
+}
+
+.main > *:not(:nth-child(1)){
+    padding: 1rem;
+}

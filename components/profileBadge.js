@@ -2,22 +2,22 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from './profileBadge.module.css'
-export default function ProfileBadge({className, followable=false}) {
+export default function ProfileBadge({className, followable=false, user, ...props}) {
   return (
-    <Link href={"/profile"} >
+    <div {...props} >
 
     <div className={`${styles.profileContainer} ${className}`}>
 
       <div className={styles.profileImage}>
-        <Image src={"https://pbs.twimg.com/profile_images/1514936411836850185/j1yCW-1V_bigger.jpg"} layout="fill" />
+        <Image src={user?.media?.profile_photo_uri ? user?.media?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
       </div>
 
       <div className={styles.userNames}>
         <span>
-          Batu
+          {user?.name}
         </span>
         <span>
-          @batumanav
+          @{user?.username}
         </span>
       </div>
       
@@ -25,6 +25,6 @@ export default function ProfileBadge({className, followable=false}) {
       <div className={styles.followButton}>Follow</div>}
     </div>
 
-  </Link>
+  </div>
   )
 }

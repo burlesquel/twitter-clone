@@ -1,0 +1,60 @@
+
+.main{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(26,140,216,0.2);
+}
+
+.popup{
+    width: 38rem;
+    height: 40rem;
+    border-radius: 1rem;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 5em;
+    z-index:500
+}
+
+.popup > label {
+    width:100%;
+}
+
+
+.popup > label > input{
+    all: unset;
+    background-color: transparent;
+    border: 1px solid #323437;
+    padding: .5rem;
+    border-radius: 5px;
+    width:70%;
+    margin-left: 1rem;
+}
+
+.button{
+    all: unset;
+    width: 50%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    border-radius:2rem;
+    background-color: #1d9bf0;
+    transition: background-color 100ms;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: #1a8cd8;
+}
+
+.signUp{
+
+}

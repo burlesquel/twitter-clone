@@ -1,9 +1,10 @@
 import Image from "next/image"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import styles from "./left.module.css"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import ProfileBadge from "../profileBadge"
+import Context from "../../context"
 const LeftItem = ({ icon_name, label, dir }) => {
   const router = useRouter()
   const currentPage = router.asPath.split("/").includes(dir)
@@ -21,6 +22,7 @@ const LeftItem = ({ icon_name, label, dir }) => {
 }
 
 export default function Left({ className }) {
+  const context = useContext(Context)
   return (
     // width: 26%
     <nav className={className}>
@@ -42,7 +44,11 @@ export default function Left({ className }) {
         </div>
       </div>
 
-      <ProfileBadge className={styles.profileBadge}/>
+      <ProfileBadge onClick={()=>{
+        localStorage.clear("id")
+        context.setUser(null)
+        context.setLoggedIn(false)
+      }} user={context.user} className={styles.profileBadge}/>
 
     </nav>
   )

@@ -1,0 +1,94 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin:0;
+    padding:0;
+    border:none
+}
+
+.left {
+    position:relative;
+    flex:1.2;
+    height: 100vh;
+    background-image: url(./../public/login_background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    flex:1;
+    height: 100vh;
+    background-color: black;
+    color: #e7e9ea;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.right > *{
+    align-self: flex-start;
+}
+
+.header{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 4rem;
+}
+
+.subheader{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+}
+
+.right > h1{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 4rem;
+}
+
+.right > h2{
+    font-size: 2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.buttonBox{
+    padding: .6em 4rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.hoverBlue{
+    background-color: #1d9bf0;
+    transition:background-color 200ms
+}
+
+.hoverBlue:hover{
+    background-color: #1a8cd8;
+}
+
+.hoverTrans{
+    border:1px solid #3e4b55;
+    background-color: transparent;
+    transition: background-color 200ms;
+    color: #1d9bf0;
+}
+
+.hoverTrans:hover{
+    background-color: rgba(26,140,216,0.2);
+}
+
+@media only screen and (max-width: 800px){
+    .left{
+        display: none;
+    }
+    .right > *{
+        align-self: center;
+    }
+}

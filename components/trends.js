@@ -19,7 +19,7 @@ const mockTrends =
 
 const Trend = ({ category = "", name = "", tweets = 0, id = "" }) => {
     return (
-        <Link href={`/trend/${id}`}>
+        <Link href={{pathname:"/search", query:{id:id, q:name}}}>
             <div className={styles.eachTrend}>
                 <span>{category} · Trending</span>
                 <span>{name}</span>
@@ -29,9 +29,9 @@ const Trend = ({ category = "", name = "", tweets = 0, id = "" }) => {
     )
 }
 
-export default function Trends() {
+export default function Trends({classname}) {
     return (
-        <div className={styles.main}>
+        <div className={`${styles.main} ${classname}`}>
             <h2>Trends for you</h2>
             {mockTrends.map(trend => {
                 return (

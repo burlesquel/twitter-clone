@@ -1,7 +1,10 @@
 import React from 'react'
+import authenticatedRoute from '../components/authenticatedRoute'
 
-export default function Notifications() {
+function Notifications() {
   return (
     <div>Notifications</div>
   )
 }
+
+export default authenticatedRoute(Notifications, {pathAfterFailure:"/login"})
