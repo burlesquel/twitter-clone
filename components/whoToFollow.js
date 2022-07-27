@@ -28,12 +28,12 @@ export default function WhoToFollow({ stick }) {
     }, [])
     
     return (
-        <div key={keyGenerator()} className={`${styles.main}`}>
+        <div  className={`${styles.main}`}>
             {users.length === 0 ? <div> LOADING </div> : <>
                 <h2>Who to follow</h2>
                 {users.map(user=>{
                     return(
-                        <ProfileBadge user={user} followable className={styles.eachProfile} />
+                        <ProfileBadge key={keyGenerator()} user={user} followable className={styles.eachProfile} />
                     )
                 })}
             </>}
