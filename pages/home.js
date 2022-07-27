@@ -8,6 +8,12 @@ import WhatsHappening from '../components/whatsHappening'
 import Context from '../context'
 import styles from '../styles/Home.module.css'
 
+var key = 0
+const keyGenerator = () =>{
+  key = key + 1
+  return key
+}
+
 function Home() {
   const context = useContext(Context)
 
@@ -43,6 +49,7 @@ function Home() {
       {tweets && tweets.length > 0 && tweets.map(tweet => {
         return (
           <Tweet
+          key={keyGenerator()}
             content={{ text: tweet?.content?.text }}
             interactions={{
               comments: tweet?.interactions?.retweets?.length,

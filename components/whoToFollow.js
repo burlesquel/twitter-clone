@@ -4,6 +4,12 @@ import Context from '../context'
 import ProfileBadge from './profileBadge'
 import styles from './whoToFollow.module.css'
 
+var key = 0
+const keyGenerator = () =>{
+  key = key + 1
+  return key
+}
+
 function getMultipleRandom(arr, num) {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
   
@@ -22,7 +28,7 @@ export default function WhoToFollow({ stick }) {
     }, [])
     
     return (
-        <div className={`${styles.main}`}>
+        <div key={keyGenerator()} className={`${styles.main}`}>
             {users.length === 0 ? <div> LOADING </div> : <>
                 <h2>Who to follow</h2>
                 {users.map(user=>{
