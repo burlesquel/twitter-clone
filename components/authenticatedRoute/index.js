@@ -1,6 +1,7 @@
 import Router from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { Server } from "../../api";
+import { Server } from "../../API";
+Server
 import Context from "../../context";
 
 const authenticatedRoute = (Component = null, options = {}) => {

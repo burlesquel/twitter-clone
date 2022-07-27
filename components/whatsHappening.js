@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React, { useContext, useRef } from 'react'
-import { Server } from '../api'
+import { Server } from '../API'
 import Context from '../context'
 import styles from './whatsHappening.module.css'
 var tweet_text = null

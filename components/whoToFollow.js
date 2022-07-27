@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Server } from '../api'
+import { Server } from '../API'
 import Context from '../context'
 import ProfileBadge from './profileBadge'
 import styles from './whoToFollow.module.css'

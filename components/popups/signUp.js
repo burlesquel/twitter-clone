@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
-import { Server } from '../../api'
+import { Server } from '../../API'
 import Context from '../../context'
 import DynamicInput from '../dynamicInput'
 import styles from './General.module.css'
