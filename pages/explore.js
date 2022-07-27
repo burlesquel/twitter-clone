@@ -7,7 +7,7 @@ function Explore() {
   return (
     <div className={styles.main}>
       <Trends/>
-      <h2>What's happening?</h2>
+      <h2>What&apos;s happening?</h2>
       <Tweet/>
       <Tweet/>
       <Tweet/>
