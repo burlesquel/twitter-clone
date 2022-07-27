@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect, useContext } from 'react'
-import { Server } from '../api'
+import { Server } from '../API'
 import authenticatedRoute from '../components/authenticatedRoute'
 import Tweet from '../components/tweet'
 import WhatsHappening from '../components/whatsHappening'
