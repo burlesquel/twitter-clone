@@ -18,14 +18,14 @@ export default function ProfileDetails() {
 
                 </div>
                 <div className={styles.profilePic}>
-                    <Image src={context.user.media.profile_photo_uri} layout='fill' />
+                    <Image src={context?.user?.media?.profile_photo_uri ? context?.user?.media?.profile_photo_uri : "https://picsum.photos/200"} layout='fill' />
                 </div>
             </div>
             <div className={styles.details}>
 
                 <div>
-                    <h3>{context.user.name}</h3>
-                    <span>@{context.user.username}</span>
+                    <h3>{context?.user?.name}</h3>
+                    <span>@{context?.user?.username}</span>
                 </div>
 
                 <span>
