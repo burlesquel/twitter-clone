@@ -20,9 +20,11 @@
     border-radius: 2rem;
 }
 .input{
-    all:unset;
+    /* all:unset; */
     width: 89%;
     font-size: large;
+    border: none;
+    padding: 0.5rem;
 }
 .button{
     /* PASSIVE COLOR: #8ecdf8

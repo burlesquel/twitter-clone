@@ -33,7 +33,14 @@ export default function ProfileDetails() {
                 </span>
 
                 <div>
-                    location fln
+                    <span><i className='bi bi-geo-alt'></i>  Türkiye</span>
+                    <span><i className='bi bi-balloon'></i>  Born July 24, 1999</span>
+                    <span><i className='bi bi-calendar3'></i>  Joined October 2012</span>
+                </div>
+
+                <div>
+                <span><b style={{color:"black"}}>{context?.user?.interactions?.followings?.length}</b> <span style={{fontSize:"small"}}>Followings</span></span>
+                <span><b style={{color:"black"}}>{context?.user?.interactions?.followers?.length}</b> <span style={{fontSize:"small"}}>Followers</span></span>
                 </div>
             </div>
         </div>

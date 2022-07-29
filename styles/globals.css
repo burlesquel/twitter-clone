@@ -21,3 +21,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+[contenteditable] {
+  outline: 0px solid transparent;
+}
+
+[contenteditable=true]:empty:not(:focus):before{
+  content:attr(placeholder);
+  color:#5e6970;
+  font-size: larger;
+}

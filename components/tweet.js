@@ -1,43 +1,88 @@
 import Image from 'next/image'
 import React from 'react'
 import styles from './tweet.module.css'
-export default function Tweet({
-  username="batumanav", 
-  name="Batuhan", 
-  profile_pic_uri="https://pbs.twimg.com/profile_images/1514936411836850185/j1yCW-1V_bigger.jpg",
-  content={
-    text:"This is a testing tweet.",
-    image:null,
-  }, 
-  interactions={
-    comments:0, 
-    likes:0, 
-    retweets:0} }) {
+
+function relativeTime(date_in_ms) {
+
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = new Date().getTime() - date_in_ms;
+
+  if (elapsed < msPerMinute) {
+    return Math.round(elapsed / 1000) + ' seconds ago';
+  }
+
+  else if (elapsed < msPerHour) {
+    return Math.round(elapsed / msPerMinute) + ' minutes ago';
+  }
+
+  else if (elapsed < msPerDay) {
+    return Math.round(elapsed / msPerHour) + ' hours ago';
+  }
+
+  else if (elapsed < msPerMonth) {
+    return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
+  }
+
+  else if (elapsed < msPerYear) {
+    return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
+  }
+
+  else {
+    return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
+  }
+}
+
+// {
+//   id:"",
+//   user:{
+//     id:"",
+//     username:"",
+//     name:"",
+//     profile_photo_uri:null
+//   },
+//   content:{
+//     text:"",
+//     image:""
+//   },
+//   created_at:"",
+//   interactions:{
+//     retweets:[],
+//     likes:[],
+//     comments:[]
+//   }
+// }
+
+export default function Tweet({tweet}) {
   return (
     <div className={styles.main}>
 
       <div className={styles.profilePicture}>
-        <Image objectFit='contain' src={profile_pic_uri ? profile_pic_uri : "https://picsum.photos/200"} layout="fill" />
+        <Image objectFit='contain' src={tweet?.user?.profile_photo_uri ? tweet?.user?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
       </div>
 
       <div className={styles.content}>
-        <span> <span>{name}</span>  <span>@{username} · 12h</span></span>
-        <span>{content.text}</span>
+        <span> <span>{tweet?.user?.name}</span>  <span>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
+        <span>{tweet?.content?.text}</span>
         <div className={styles.buttons}>
 
           <div className={styles.iconNumberContainer}>
             <div className={styles.iconContainer}><i className='bi bi-chat'></i></div>
-            <span className={styles.number}>{interactions.comments}</span>
+            <span className={styles.number}>{tweet?.interactions?.comments?.length}</span>
           </div>
 
           <div className={styles.iconNumberContainer}>
             <div className={styles.iconContainer}><i className='bi bi-recycle'></i></div>
-            <span className={styles.number}>{interactions.retweets}</span>
+            <span className={styles.number}>{tweet?.interactions?.retweets?.length}</span>
           </div>
 
           <div className={styles.iconNumberContainer}>
             <div className={styles.iconContainer}><i className='bi bi-heart'></i></div>
-            <span className={styles.number}>{interactions.likes}</span>
+            <span className={styles.number}>{tweet?.interactions?.likes?.length}</span>
           </div>
 
           <div className={styles.iconNumberContainer}>

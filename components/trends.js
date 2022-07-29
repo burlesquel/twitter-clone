@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './trends.module.css'
 import Link from "next/link"
+import { Server } from '../API'
+import Context from '../context'
+import { useRouter } from 'next/router'
+
+var key = 0
+function keyGenerator() {
+    key = key + 1
+    return key
+}
 
 const mockTrends =
     [
@@ -16,31 +25,54 @@ const mockTrends =
         { category: "Politics", name: "#Merkel", tweets: 4342343, id: "636gre54" },
     ]
 
+function randomCategory() {
+    const categories = Array.from(mockTrends, trend => trend.category)
+    return categories[Math.round(Math.random() * categories.length)]
+}
 
-const Trend = ({ category = "", name = "", tweets = 0, id = "" }) => {
+const Trend = ({ category, name = "", tweetsNumber = 0 }) => {
     return (
-        <Link href={{pathname:"/search", query:{id:id, q:name}}}>
+        <Link href={{ pathname: "/search", query: { q: name.replace("#","") } }}>
             <div className={styles.eachTrend}>
                 <span>{category} · Trending</span>
                 <span>{name}</span>
-                <span>{tweets} tweets</span>
+                <span>{tweetsNumber} tweets</span>
             </div>
         </Link>
     )
 }
 
-export default function Trends({classname}) {
+export default function Trends({ classname }) {
+    const router = useRouter()
+    const context = useContext(Context)
+    const [trends, setTrends] = useState([])
+    const refreshTrends = () => {
+        Server.getTrends().then(res => {
+            setTrends(res.data.sort((a, b) => b.tweets.length - a.tweets.length))
+        }).catch(err => {
+            setTrends([])
+        })
+    }
+
+    useEffect(() => {
+        refreshTrends()
+        const interval = setInterval(refreshTrends, 30000)
+        return () => {
+            clearInterval(interval)
+        }
+    }, [])
+    useEffect(refreshTrends, [context.user, router])
+
     return (
         <div className={`${styles.main} ${classname}`}>
             <h2>Trends for you</h2>
-            {mockTrends.map(trend => {
+            {trends.map(trend => {
                 return (
-                    <Trend 
-                    key={trend.id}
-                    tweets={trend.tweets}
-                    name={trend.name} 
-                    id={trend.id} 
-                    category={trend.category}/>
+                    <Trend
+                        key={keyGenerator()}
+                        tweetsNumber={trend.tweets.length}
+                        name={trend.name}
+                        category={randomCategory()} />
                 )
             })}
         </div>

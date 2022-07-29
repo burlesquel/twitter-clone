@@ -1,5 +1,5 @@
 import axios from "axios";
-const api_url = "https://twtr-clone-server.herokuapp.com"
+const api_url = "http://localhost:5000"
 
 const Server = {
     newUser: async (email, password, username, name) => {
@@ -8,18 +8,14 @@ const Server = {
     getUser:async(query) =>{
         return await axios.get(`${api_url}/users`, {params:query})
     },
-    getTweets: async () => {
-        return await axios.get(`${api_url}/tweets`).then(res => {
-            if (res.status) {
-                return res.data
-            }
-            else {
-                return false
-            }
-        })
+    getTweets: async (query) => {
+        return await axios.get(`${api_url}/tweets`, {params:query})
     },
     newTweet: async(user_id, text) =>{
         return await axios.post(`${api_url}/tweets`, {user_id, text})
+    },
+    getTrends: async(query) =>{
+        return await axios.get(`${api_url}/trends`, {params:query})
     }
 }
 
