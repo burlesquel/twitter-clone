@@ -3,9 +3,10 @@
     display: flex;
     flex-direction: column;
     width: fit-content;
+    z-index: 1000;
 }
 
-.nav>*:not(:first-child):not(:last-child) {
+.leftItem > *{
     /* EACH NAVIGATION ITEM ON THE LEFT EXCEPT THE TWITTER BIRD AND TWEET BUTTON  */
     display: flex;
     flex-direction: row;
@@ -22,20 +23,20 @@
     transition: 200ms;
 }
 
-.nav>*:first-child {
+.twitterBird > * {
     /* TWITTER BIRD */
     margin-left: 1rem;
     margin-bottom: .5rem;
     cursor: pointer;
 }
 
-.nav>*:not(:first-child):not(:last-child):hover {
+.leftItem > *:hover {
     /* ALL NAV ITEMS EXCEPT FIRST AND LAST */
     background-color: #E7E7E8;
     border-radius: 2rem;
 }
 
-.nav>*>i {
+.nav>*>*>i {
     font-size: 1.5rem;
     margin-right: .7rem;
 }
@@ -60,11 +61,39 @@
 }
 
 @media only screen and (max-width: 1280px) {
-    .nav>* > span{
+    .leftItem > * > span {
         display: none;
         align-self: flex-end;
     }
-    .profileBadge > *:nth-child(2){
-    display: none;
+
+    .nav>*>*>i{
+        margin: 0;
     }
-  }
+
+    .profileBadge>*:nth-child(2) {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .twitterBird{
+        display: none;
+    }
+
+    .nav {
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .hideOnMobile{
+        display: none !important;
+    }
+
+    .leftItem > *{
+        margin: .2rem 0;
+    }
+}

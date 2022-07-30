@@ -20,11 +20,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 2 ;
 }
 
 /* 34 */
 .center {
     width: 37rem;
+    z-index: 1;
 }
 
 /* 40 */
@@ -33,6 +35,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 2;
 }
 
 
@@ -54,5 +57,28 @@
 
     .container {
         justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .container{
+        flex-direction: column-reverse;
+    }
+
+    .center{
+        width: 100%;
+        flex:unset
+    }
+
+    .leftMain{
+        position: sticky;
+        bottom: 0;
+        flex-direction: row;
+        width: 100%;
+        flex: unset;
+        height: 10%;
+        background-color: white;
+        justify-content: space-around;
+        align-items: center;
     }
 }
