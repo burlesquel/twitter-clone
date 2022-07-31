@@ -1,17 +1,7 @@
 import axios from "axios";
-const api_url = "https://twtr-clone-server.herokuapp.com"
-// const api_url = "http://localhost:5000"
-const imgBB_token = "6d207e02198a847aa98d0a2a901485a5"
+// const api_url = "https://twtr-clone-server.herokuapp.com"
+const api_url = "http://localhost:5000"
 
-// import cloudinary from 'cloudinary'
-// cloudinary.v2.config({
-//     api_key: "827684568314262",
-//     api_secret: "IjmdIeq8fUJZ1nPX6_lPbwQc1UA",
-//     cloud_name: "dnxs5wapo"
-// })
-// return await cloudinary.v2.uploader.upload(file, function (error, result) {
-//     return result
-// })
 
 const Server = {
     newUser: async (email, password, username, name) => {
@@ -20,9 +10,8 @@ const Server = {
     getUser: async (query) => {
         return await axios.get(`${api_url}/users`, { params: query })
     },
-    updateUser: async (data = { name, bio, location, website, media: { profile_photo, cover_photo } }) => {
-
-
+    updateUser: async (data) => {
+        return await axios.put(`${api_url}/users`, data)
     },
     getTweets: async (query) => {
         return await axios.get(`${api_url}/tweets`, { params: query })

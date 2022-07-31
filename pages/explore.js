@@ -8,13 +8,6 @@ function Explore() {
     <div className={styles.main}>
       <Trends/>
       <h2>What&apos;s happening?</h2>
-      <Tweet/>
-      <Tweet/>
-      <Tweet/>
-      <Tweet/>
-      <Tweet/>
-      <Tweet/>
-      <Tweet/>
     </div>
   )
 }
