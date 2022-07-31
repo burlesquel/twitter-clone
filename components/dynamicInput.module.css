@@ -1,5 +1,6 @@
 .main {
     position: relative;
+    border: 1px solid black;
 }
 
 .input {
@@ -7,16 +8,16 @@
     width: 100%;
     height: 100%;
     background-color: transparent;
-    border: 2px solid #313437;
+    /* border: 2px solid #313437; */
     border-radius: 0.4rem;
     box-sizing: border-box;
     padding: .5rem;
 }
 
 .span {
-    color: #313437;
+    /* color: #313437; */
     position: absolute;
-    background-color: black;
+    /* background-color: black; */
     padding-left: 1px;
     padding-right: 1px;
     left: 0;
@@ -24,6 +25,7 @@
     transition: 200ms ease;
     margin-left: .5rem;
     user-select: none;
+    cursor: text;
 }
 
 .input:focus~.span, .input:valid ~.span{

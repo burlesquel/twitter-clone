@@ -11,7 +11,7 @@ function Profile() {
 
   return (
     <div className={styles.main}>
-      <ProfileDetails />
+      <ProfileDetails self/>
       <Tweets query={{'user.id': context.user.id}}/>
     </div>
   )

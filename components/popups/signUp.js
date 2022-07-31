@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { Server } from '../../API'
 import Context from '../../context'
 import DynamicInput from '../dynamicInput'
-import styles from './General.module.css'
+import styles from './signIn_signUp.module.css'
 export default function SignUp() {
     const context = useContext(Context)
     const router = useRouter()
@@ -27,10 +27,10 @@ export default function SignUp() {
             <form onSubmit={signUp}
                 className={`${styles.signUp} ${styles.popup}`}>
                 <h1>Create your account</h1>
-                <DynamicInput required type={"email"} name={"email"} placeholder={"Email"} />
-                <DynamicInput required type={"password"} name={"password"} placeholder={"Password"} />
-                <DynamicInput required name={"username"} placeholder={"Username"} />
-                <DynamicInput required name={"name"} placeholder={"Name"} />
+                <DynamicInput theme={"dark"} required type={"email"} name={"email"} placeholder={"Email"} />
+                <DynamicInput theme={"dark"} required type={"password"} name={"password"} placeholder={"Password"} />
+                <DynamicInput theme={"dark"} required name={"username"} placeholder={"Username"} />
+                <DynamicInput theme={"dark"} required name={"name"} placeholder={"Name"} />
                 <button type='submit' className={styles.button}>
                     <span>Sign up</span>
                 </button>

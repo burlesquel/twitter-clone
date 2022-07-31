@@ -9,7 +9,7 @@ export const ContextProvider = ({ children }) => {
     
 
     const [user, setUser] = useState()
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(null)
 
     const context = {
 

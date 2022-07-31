@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     width: fit-content;
-    z-index: 1000;
 }
 
 .leftItem > *{
