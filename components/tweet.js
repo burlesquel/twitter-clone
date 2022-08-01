@@ -73,7 +73,7 @@ export default function Tweet({tweet}) {
       </div>
 
       <div className={styles.content}>
-        <span onClick={goProfile}> <span>{tweet?.user?.name}</span>  <span>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
+        <span > <span onClick={goProfile}>{tweet?.user?.name}</span>  <span onClick={goProfile}>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
         <span>{tweet?.content?.text}</span>
         <div className={styles.buttons}>
 
