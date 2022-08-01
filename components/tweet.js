@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import styles from './tweet.module.css'
-
+import {useRouter} from 'next/router'
 function relativeTime(date_in_ms) {
   
 
@@ -60,9 +60,10 @@ function relativeTime(date_in_ms) {
 // }
 
 export default function Tweet({tweet}) {
+
   const router = useRouter()
   function goProfile(){
-    router.push(`/${tweet.user.username}`)
+    router.push(`/${tweet?.user?.username}`)
   }
   return (
     <div className={styles.main}>
