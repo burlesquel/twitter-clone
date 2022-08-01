@@ -63,7 +63,7 @@ export default function Tweet({tweet}) {
 
   const router = useRouter()
   function goProfile(){
-    router.push(`/${tweet?.user?.username}`)
+    router.push(`/profile/${tweet?.user?.username}`)
   }
   return (
     <div className={styles.main}>
