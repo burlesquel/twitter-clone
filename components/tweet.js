@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './tweet.module.css'
 
 function relativeTime(date_in_ms) {
+  
 
   var msPerMinute = 60 * 1000;
   var msPerHour = msPerMinute * 60;
@@ -59,15 +60,19 @@ function relativeTime(date_in_ms) {
 // }
 
 export default function Tweet({tweet}) {
+  const router = useRouter()
+  function goProfile(){
+    router.push(`/${tweet.user.username}`)
+  }
   return (
     <div className={styles.main}>
 
-      <div className={styles.profilePicture}>
+      <div onClick={goProfile} className={styles.profilePicture}>
         <Image objectFit='cover' src={tweet?.user?.profile_photo_uri ? tweet?.user?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
       </div>
 
       <div className={styles.content}>
-        <span> <span>{tweet?.user?.name}</span>  <span>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
+        <span onClick={goProfile}> <span>{tweet?.user?.name}</span>  <span>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
         <span>{tweet?.content?.text}</span>
         <div className={styles.buttons}>
 
