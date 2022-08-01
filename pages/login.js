@@ -6,7 +6,7 @@ import Image from 'next/image'
 import SignUp from '../components/popups/signUp'
 import SignIn from '../components/popups/signIn'
 import { entranceAlghorithm } from '../API'
-
+import Popup from '../components/popups/signIn_signUp'
 export default function Login() {
   const context = useContext(Context)
   const router = useRouter()
@@ -34,8 +34,7 @@ export default function Login() {
     return (
       <div className={styles.main}>
 
-        {popup === "sign-up" && <SignUp />}
-        {popup === "sign-in" && <SignIn />}
+        <Popup type={popup} setPopup={setPopup}/>
 
         <div className={styles.left}>
           <Image objectFit='contain' width={400} height={400} src='/icons/twitter_bird_white.png' />

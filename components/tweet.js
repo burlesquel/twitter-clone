@@ -63,7 +63,7 @@ export default function Tweet({tweet}) {
     <div className={styles.main}>
 
       <div className={styles.profilePicture}>
-        <Image objectFit='contain' src={tweet?.user?.profile_photo_uri ? tweet?.user?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
+        <Image objectFit='cover' src={tweet?.user?.profile_photo_uri ? tweet?.user?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
       </div>
 
       <div className={styles.content}>

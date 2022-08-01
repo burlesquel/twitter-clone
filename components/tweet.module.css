@@ -33,7 +33,7 @@
 .content {
     display: flex;
     flex-direction: column;
-    width: 81%;
+    width: 84%;
     overflow-wrap: break-word;
 
 }

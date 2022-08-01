@@ -10,7 +10,11 @@ export default function DynamicInput({ name, placeholder, type = undefined, them
   const themes = {
     dark: {
 
-      main: {},
+      main: {
+        borderColor:"#1a1c1d",
+        borderWidth:1,
+        borderRadius:10
+      },
       input: {
         borderColor: "#313437",
         borderWidth: 2,
@@ -63,8 +67,8 @@ export default function DynamicInput({ name, placeholder, type = undefined, them
     <div style={themes[currentTheme]?.main} className={`${styles.main} ${props.className}`}>
 
       <input
-        onFocus={() => { setCurrentTheme(themeChangeOnClick) }}
-        onBlur={() => { setCurrentTheme(theme) }}
+        onFocus={() => { themeChangeOnClick && setCurrentTheme(themeChangeOnClick) }}
+        onBlur={() => { themeChangeOnClick && setCurrentTheme(theme) }}
         style={themes[currentTheme]?.input}
         required={required}
         type={type}

@@ -39,7 +39,7 @@ export default function WhatsHappening() {
         <div className={styles.main}>
             <div className={styles.inputAndPP}>
                 <div className={styles.profileImage}>
-                    <Image objectFit='contain' src={context?.user?.media?.profile_photo_uri ? context?.user?.media?.profile_photo_uri : "/icons/loading-spinner.gif"} layout="fill" />
+                    <Image objectFit='cover' src={context?.user?.media?.profile_photo_uri ? context?.user?.media?.profile_photo_uri : "/icons/loading-spinner.gif"} layout="fill" />
                 </div>
                 {/* <input ref={ref} maxLength={240} onChange={(e)=>{tweet_text = e.target.value}} className={styles.input} placeholder="What's happening?" /> */}
                 <p 
