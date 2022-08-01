@@ -27,7 +27,7 @@ export default function WhatsHappening() {
 
     const newTweet = () =>{
         console.log("text:", tweet_text);
-        Server.newTweet(context.user.id, tweet_text).then(res=>{
+        Server.newTweet(context.user.id, context.user.username, tweet_text).then(res=>{
             console.log("TWEET SENT: ",res.data);
             context.setUser(res.data)
             ref.current.textContent = ""

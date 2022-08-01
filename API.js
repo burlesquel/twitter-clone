@@ -16,8 +16,8 @@ const Server = {
     getTweets: async (query) => {
         return await axios.get(`${api_url}/tweets`, { params: query })
     },
-    newTweet: async (user_id, text) => {
-        return await axios.post(`${api_url}/tweets`, { user_id, text })
+    newTweet: async (user_id, username, text) => {
+        return await axios.post(`${api_url}/tweets`, { user_id, username, text })
     },
     getTrends: async (query) => {
         return await axios.get(`${api_url}/trends`, { params: query })
