@@ -11,6 +11,7 @@ const keyGenerator= () =>{
 }
 
 export default function Tweets({ query }) {
+    console.log(query);
     const router = useRouter()
     const context = useContext(Context)
     const [tweets, setTweets] = useState([])
@@ -24,7 +25,7 @@ export default function Tweets({ query }) {
         })
     }
 
-    useEffect(refreshTweets, [context.user, router])
+    useEffect(refreshTweets, [context.user, router, context.refresh])
     useEffect(() => {
         const refreshTweetInterval = setInterval(() => {
             refreshTweets()
@@ -37,7 +38,18 @@ export default function Tweets({ query }) {
     return (
         <>
             {tweets.map(
-                tweet => <Tweet key={keyGenerator()} tweet={tweet} />
+                tweet => {
+                    if(tweet.retweet){
+                        return(
+                            <Tweet key={keyGenerator()} retweet={true} tweet_={tweet} />
+                        )
+                    }
+                    else{
+                        return(
+                            <Tweet key={keyGenerator()} tweet_={tweet} />
+                        )
+                    }
+                }
             )}
         </>
     )

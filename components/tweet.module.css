@@ -1,4 +1,18 @@
+.container{
+
+    width:100%
+}
+
+.retweeted_by{
+    color: #798690;
+    font-size: small;
+    font-weight: bold;
+    margin-left: 2rem;
+    cursor: pointer;
+}
+
 .main {
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     width: 100%;

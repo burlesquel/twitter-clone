@@ -15,6 +15,7 @@ function Profile() {
   useEffect(() => {
     Server.getUser({ username: username }).then(res => {
       setUser(res.data[0])
+      context.setCurrentDisplayedProfile(res.data[0])
     })
   }, [router])
 
@@ -22,7 +23,7 @@ function Profile() {
     return (
       <div className={styles.main}>
         <ProfileDetails self={username === context?.user?.username ? true : false} user={user} />
-        <Tweets  query={{'user.username':username}}/>
+        <Tweets  query={ { $or: [ { 'interactor_user.username': username }, { 'user.username': username } ] }}/>
       </div>
     )
   }

@@ -5,14 +5,14 @@ import Context from '../../context'
 import styles from './Index.module.css'
 import Tweets from '../../components/tweets'
 
-
+// const query = find( { $or: [ { 'interactor_user.id': context.user.id }, { 'user.id': context.user.id } ] } )
 function Profile() {
   const context = useContext(Context)
 
   return (
     <div className={styles.main}>
       <ProfileDetails self/>
-      <Tweets query={{'user.id': context.user.id}}/>
+      <Tweets query={ { $or: [ { 'interactor_user.id': context.user.id }, { 'user.id': context.user.id } ] } }/>
     </div>
   )
 }

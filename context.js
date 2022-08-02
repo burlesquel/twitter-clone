@@ -7,9 +7,10 @@ const Context = createContext({})
 export const ContextProvider = ({ children }) => {
     const router = useRouter()
     
-
     const [user, setUser] = useState()
     const [loggedIn, setLoggedIn] = useState(null)
+    const [currentDisplayedProfile, setCurrentDisplayedProfile] = useState(null)
+    const [refresh, setRefresh] = useState()
 
     const context = {
 
@@ -17,7 +18,13 @@ export const ContextProvider = ({ children }) => {
         setUser:setUser,
 
         loggedIn:loggedIn,
-        setLoggedIn:setLoggedIn
+        setLoggedIn:setLoggedIn,
+
+        currentDisplayedProfile:currentDisplayedProfile,
+        setCurrentDisplayedProfile:setCurrentDisplayedProfile,
+
+        refresh:refresh,
+        setRefresh:setRefresh
 
     }
 

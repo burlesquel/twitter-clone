@@ -77,8 +77,8 @@ export default function CenterHeaderBar({ className }) {
 
           <div onClick={router.back} className={styles.iconContainer}><i className='bi bi-arrow-left'></i></div>
           <div>
-            <h3>{context?.user?.name}</h3>
-            <span>{context?.user?.tweets?.length} Tweets</span>
+            <h3>{currentRoute.length === 2 ? context.user?.username : context.currentDisplayedProfile?.name}</h3>
+            <span>{currentRoute.length === 2 ? context.user?.tweets?.length : context.currentDisplayedProfile?.tweets?.length} Tweets</span>
           </div>
 
       </div>

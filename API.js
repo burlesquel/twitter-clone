@@ -24,6 +24,9 @@ const Server = {
     },
     uploadImage : async(file) =>{
         return await axios.post(`${api_url}/images`, {image:file})
+    },
+    newInteraction : async(type, tweet_id, interactor_user, opposite_user, done_at, content)=>{
+        return await axios.post(`${api_url}/interactions`, {type, tweet_id, interactor_user, opposite_user, done_at, content})
     }
 }
 
