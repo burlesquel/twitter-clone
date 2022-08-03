@@ -50,7 +50,6 @@ const Trend = ({ category, name = "", tweetsNumber = 0, empty = false, style }) 
             <div style={{alignItems:"center"}} className={styles.eachTrend}>
             <Oval
                 wrapperStyle={{ margin: "1rem"}}
-
                 color='#1DA1F2'
                 secondaryColor='#74c1f1'
                 width={"2rem"}

@@ -4,7 +4,6 @@ import { Server } from '../API'
 import Context from '../context'
 import Tweet from './tweet'
 import { Oval } from 'react-loader-spinner'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 var key = 0
 const keyGenerator = () => {
@@ -12,61 +11,53 @@ const keyGenerator = () => {
     return key
 }
 
+var loadingEffectOnInital = true
+
 export default function Tweets({ query }) {
     const router = useRouter()
     const context = useContext(Context)
-    const [tweets, setTweets] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [tweets, setTweets] = useState(null)
     // YOU CAN CREATE A WAITING STATE
+    // console.log("router.pathname: ", router.pathname);
+    // console.log("router.aspath: ", router.asPath);
+    // console.log("router.basePath: ", router.basePath);
 
     const refreshTweets = (setLoadingTrue = false) => {
-        setLoadingTrue && setLoading(true)
-        console.log("refreshing tweets..");
+        setLoadingTrue && setTweets(null)
+        console.log("refreshing tweets with: ", query);
         Server.getTweets(query).then(res => {
+            // console.log(Array.from(res.data, tweet=>{console.log(tweet.content.text);}));
             setTweets(res.data.reverse())
-            setLoading(false)
         }).catch(err => {
             // ERROR ALGHORITM
-            setLoading(false)
+            console.log("ERROR WHILE GETTING TWEETS: ", err);
+            setTweets(null)
         })
     }
 
-    useEffect(() => { refreshTweets(true) }, [context.user])
+    useEffect(() => { refreshTweets(true) }, [])
+    useEffect(() => { refreshTweets(false) }, [router])
 
-    if (!loading) {
+
+    if (tweets) {
         return (
-
-            <TransitionGroup>
+            <>
                 {tweets.map(
                     tweet => {
                         if (tweet.retweet) {
                             return (
-                                <CSSTransition
-                                    key={keyGenerator()}
-                                    timeout={500}
-                                    classNames="tweetAnimation"
-                                >
-                                    <Tweet retweet={true} tweet_={tweet} refreshTweets={refreshTweets} />
-                                </CSSTransition>
-                                
+                                    <Tweet retweet={true} key={keyGenerator()} tweet_={tweet} refreshTweets={refreshTweets} />
                             )
                         }
                         else {
                             return (
-                                <CSSTransition
-                                    key={keyGenerator()}
-                                    timeout={500}
-                                    classNames="tweetAnimation"
-                                >
-                                    <Tweet tweet_={tweet} refreshTweets={refreshTweets} />
-                                </CSSTransition>
-
+                                    <Tweet tweet_={tweet} key={keyGenerator()} refreshTweets={refreshTweets} />
                             )
                         }
                     }
                 )}
+                </>
 
-            </TransitionGroup>
         )
     }
     else {

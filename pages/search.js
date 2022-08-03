@@ -8,7 +8,6 @@ function Search() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const { q } = router.query
-
     if (q === undefined) {
         router.push("/explore")
         return <div></div>
@@ -20,6 +19,7 @@ function Search() {
             )
         }
         else {
+            console.log("search.js: q = ",q);
             return (
                 <div className={styles.main}>
                     <Tweets query={{ hashtags: `#${q}` }} />

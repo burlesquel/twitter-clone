@@ -1,10 +1,9 @@
 import Image from 'next/image'
-import React, { useContext, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './tweet.module.css'
 import { useRouter } from 'next/router'
 import { Server } from '../API';
 import Context from '../context'
-import { CSSTransition } from 'react-transition-group';
 
 function relativeTime(date_in_ms) {
 
@@ -68,7 +67,7 @@ export default function Tweet({ tweet_, refreshTweets }) {
   const router = useRouter()
   const context = useContext(Context)
 
-  const [tweet, setTweet] = useState(tweet_?.tweet || tweet_) // IF IT IS A RETWEET, THE FIRST ONE WILL RETURN FALSY
+  const [tweet, setTweet] = useState(tweet_.retweet ? tweet_.tweet : tweet_) // IF IT IS A RETWEET, THE FIRST ONE WILL RETURN FALSY
 
   const alreadyInteracted =
     [tweet.interactions?.likes?.includes(context.user.id),
@@ -86,22 +85,31 @@ export default function Tweet({ tweet_, refreshTweets }) {
 
   const newInteraction = (type) => {
 
+    if(type === 0){
+      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, likes: [...tweet.interactions.likes, context.user.id] } }
+      setTweet(pseudoTweet)
+    }
+
     Server.newInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }, { id: tweet.user.id, username: tweet.user.id }, new Date(), {}).then(res => {
-      refreshTweet()
+      type === 0 && refreshTweet()
       type === 1 && refreshTweets()
     }).catch(err => {
-      console.log(err);
+      type === 0 && refreshTweet()
     })
 
   }
 
   const deleteInteraction = (type) => {
+    if(type === 0){
+      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, likes: tweet.interactions.likes.filter(user_id => user_id !== context.user.id) } }
+      setTweet(pseudoTweet)
+    }
 
     Server.deleteInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }).then(res => {
-      refreshTweet()
+      type === 0 && refreshTweet()
       type === 1 && refreshTweets()
     }).catch(err => {
-      console.log(err);
+      type === 0 && refreshTweet()
     })
 
   }
@@ -111,7 +119,7 @@ export default function Tweet({ tweet_, refreshTweets }) {
       setTweet(res.data[0])
     })
   }
-  
+
 
   function goProfile() {
     router.push(`/profile/${tweet?.user?.username}`)
@@ -119,7 +127,7 @@ export default function Tweet({ tweet_, refreshTweets }) {
   return (
 
 
-      <div className={styles.container}>
+    <div className={styles.container}>
       {tweet_.retweet && <span className={styles.retweeted_by}><i className='bi bi-recycle'></i> <span onClick={() => { router.push(`/profile/${tweet_.interactor_user?.username}`) }}> {tweet_.interactor_user?.username} retweeted</span></span>}
       <div className={styles.main}>
 
@@ -155,6 +163,6 @@ export default function Tweet({ tweet_, refreshTweets }) {
 
       </div>
     </div>
-    
+
   )
 }

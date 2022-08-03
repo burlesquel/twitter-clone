@@ -35,11 +35,11 @@ const Server = {
 const entranceAlghorithm = async (context, localStorage, Router) => {
     const id = localStorage.getItem("id")
     if (id && id != "undefined" && id != undefined) {
-        console.log("ID FOUND: ", id);
+        // console.log("ID FOUND: ", id);
         Server.getUser({ id: id }).then(res => {
             const user = res.data[0]
             if (user) {
-                console.log("USER FOUND: ", res.data[0]);
+                // console.log("USER FOUND: ", res.data[0]);
                 context.setUser(res.data[0])
                 context.setLoggedIn(true)
             }
