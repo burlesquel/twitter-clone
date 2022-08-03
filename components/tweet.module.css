@@ -76,13 +76,13 @@
     margin-top: .7rem;
 }
 
-.iconNumberContainer{
+.buttons > *{ /* .iconNumberContainerS */
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.iconContainer{
+.buttons > * > *:first-child{ /* .iconContainer */
     display: flex;
     height:2rem;
     width: 2rem;
@@ -90,14 +90,52 @@
     justify-content: center;
     border-radius: 1rem;
 }
+/*
+comment bg: #E1EEF6
+comment text:#7FC4F3
 
-.iconNumberContainer:hover .iconContainer{
+retweet bg: #DEF1EB
+retweet text: #54CFA6
+
+like bg: #F7E0EB
+like text: #F91880
+*/
+
+.buttons > *{
+    transition: 200ms;
+}
+
+.buttons > *:first-child:hover .iconContainer{
     background-color: #E1EEF6;
 }
 
-.iconNumberContainer:hover{
-    color: #7FC4F3;
+.buttons >*:first-child:hover{
+    color:#7FC4F3
 }
+
+.buttons > *:nth-child(2):hover .iconContainer{
+    background-color: #DEF1EB;
+}
+
+.buttons >*:nth-child(2):hover{
+    color:#54CFA6
+}
+
+.buttons > *:nth-child(3):hover .iconContainer{
+    background-color: #F7E0EB;
+}
+
+.buttons >*:nth-child(3):hover{
+    color:#F91880
+}
+
+/* .iconNumberContainer:hover .iconContainer{
+    background-color: #E1EEF6;
+} */
+
+/* .iconNumberContainer:hover{
+    color: #7FC4F3;
+} */
 
 .number{
     font-size: small;

@@ -116,40 +116,7 @@ export default function Tweet({ tweet_, refreshTweets }) {
   }
   return (
     <div className={styles.container}>
-      {tweet_.retweet && <span className={styles.retweeted_by}><i className='bi bi-recycle'></i> <span onClick={() => { router.push(`/profile/${tweet_.interactor_user?.username}`) }}> {tweet_.interactor_user?.username} retweeted</span></span>}
-      <div className={styles.main}>
 
-        <div onClick={goProfile} className={styles.profilePicture}>
-          <Image objectFit='cover' src={tweet?.user?.profile_photo_uri ? tweet?.user?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
-        </div>
-
-        <div className={styles.content}>
-          <span > <span onClick={goProfile}>{tweet?.user?.name}</span>  <span onClick={goProfile}>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
-          <span>{tweet?.content?.text}</span>
-          <div className={styles.buttons}>
-
-            <div className={styles.iconNumberContainer} >
-              <div onClick={() => { alert("Very soon :)") }} className={styles.iconContainer}><i className='bi bi-chat'></i></div>
-              <span className={styles.number}>{tweet?.interactions?.comments?.length}</span>
-            </div>
-
-            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted[1] && "#54CFA6" }}  >
-              <div onClick={() => { on_interaction(1) }} className={styles.iconContainer}><i className='bi bi-recycle'></i></div>
-              <span className={styles.number}>{tweet?.interactions?.retweets?.length}</span>
-            </div>
-
-            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted[0] && "#F91880" }}>
-              <div onClick={() => { on_interaction(0) }} className={styles.iconContainer}><i className={`bi bi-heart${alreadyInteracted[0] ? "-fill" : ""}`}></i></div>
-              <span className={styles.number}>{tweet?.interactions?.likes?.length}</span>
-            </div>
-
-            <div className={styles.iconNumberContainer}>
-              <div onClick={() => { alert("Very soon :)") }} className={styles.iconContainer}><i className='bi bi-upload'></i></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
   )
 }

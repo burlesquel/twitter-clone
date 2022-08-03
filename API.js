@@ -2,7 +2,6 @@ import axios from "axios";
 const api_url = "https://twtr-clone-server.herokuapp.com"
 // const api_url = "http://localhost:5000"
 
-
 const Server = {
     newUser: async (email, password, username, name) => {
         return await axios.post(`${api_url}/users`, { email, password, username, name })
@@ -22,11 +21,14 @@ const Server = {
     getTrends: async (query) => {
         return await axios.get(`${api_url}/trends`, { params: query })
     },
-    uploadImage : async(file) =>{
-        return await axios.post(`${api_url}/images`, {image:file})
+    uploadImage: async (file) => {
+        return await axios.post(`${api_url}/images`, { image: file })
     },
-    newInteraction : async(type, tweet_id, interactor_user, opposite_user, done_at, content)=>{
-        return await axios.post(`${api_url}/interactions`, {type, tweet_id, interactor_user, opposite_user, done_at, content})
+    newInteraction: async (type, tweet_id, interactor_user, opposite_user, done_at, content) => {
+        return await axios.post(`${api_url}/interactions`, { type, tweet_id, interactor_user, opposite_user, done_at, content })
+    },
+    deleteInteraction: async (type, tweet_id, interactor_user,) => {
+        return await axios.delete(`${api_url}/interactions`, {data:{ type, tweet_id, interactor_user }})
     }
 }
 

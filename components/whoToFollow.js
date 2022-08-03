@@ -3,6 +3,7 @@ import { Server } from '../API'
 import Context from '../context'
 import ProfileBadge from './profileBadge'
 import styles from './whoToFollow.module.css'
+import { Oval } from  'react-loader-spinner'
 
 var key = 0
 const keyGenerator = () =>{
@@ -18,16 +19,17 @@ function getMultipleRandom(arr, num) {
 
 export default function WhoToFollow({ stick }) {
     const context = useContext(Context)
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState(null)
     useEffect(() => {
       Server.getUser({}).then(res=>{
         setUsers(getMultipleRandom(res.data.filter(user => user.id != context.user.id), 3))
       }).catch(err=>{
-
+        setUsers([])
       })
     }, [])
     
-    return (
+    if(users){
+      return (
         <div  className={`${styles.main}`}>
             {users.length === 0 ? <div> LOADING </div> : <>
                 <h2>Who to follow</h2>
@@ -39,4 +41,16 @@ export default function WhoToFollow({ stick }) {
             </>}
         </div>
     )
+    }
+    else{
+      return(
+        <div style={{width:"70%", height:"10rem", backgroundColor:"#f7f9f9", display:"flex", justifyContent:"center", alignItems:"center"}}>
+                          <Oval 
+            color='#1DA1F2'
+            secondaryColor='#74c1f1'
+            width={"3rem"}
+            height={"3rem"}/>
+        </div>
+      )
+    }
 }
