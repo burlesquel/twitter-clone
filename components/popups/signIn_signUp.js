@@ -29,28 +29,30 @@ function SignIn({ setPopup }) {
     const [loading, setLoading] = useState(false)
     const signIn = (e) => {
         e.preventDefault()
-        setLoading(true)
-        const { email, password } = e.target
-        console.log(email.value, password.value);
-        Server.getUser({ email: email.value, password: password.value }).then(res => {
-            if (res.data.length > 0) {
-                const user = res.data[0]
-                console.log("SUCCESS LOGIN:", res.data[0])
-                localStorage.setItem("id", user.id)
-                context.setUser(user)
-                router.push("/home")
-                context.setLoggedIn(true)
+        if(!loading){
+            setLoading(true)
+            const { email, password } = e.target
+            console.log(email.value, password.value);
+            Server.getUser({ email: email.value, password: password.value }).then(res => {
+                if (res.data.length > 0) {
+                    const user = res.data[0]
+                    console.log("SUCCESS LOGIN:", res.data[0])
+                    localStorage.setItem("id", user.id)
+                    context.setUser(user)
+                    router.push("/home")
+                    context.setLoggedIn(true)
+                    setLoading(false)
+                }
+                else {
+                    alert("Wrong email or password.")
+                    setLoading(false)
+                }
+            }).catch(err => {
+                console.log("THERE IS AN ERROR: ", err.response.data);
+                alert("There has been an error, please try later.")
                 setLoading(false)
-            }
-            else {
-                alert("Wrong email or password.")
-                setLoading(false)
-            }
-        }).catch(err => {
-            console.log("THERE IS AN ERROR: ", err.response.data);
-            alert("There has been an error, please try later.")
-            setLoading(false)
-        })
+            })
+        }
     }
     return (
         <Popup setPopup={setPopup} onSubmit={signIn}>
@@ -61,8 +63,8 @@ function SignIn({ setPopup }) {
                 {loading ? <Oval
                     color='#9bd3f8'
                     secondaryColor='#ffffff'
-                    width={"1rem"}
-                    height={"1rem"} /> :
+                    width={"1.5rem"}
+                    height={"1.5rem"} /> :
                     <span>Sign in</span>}
             </button>
         </Popup>
@@ -75,21 +77,23 @@ function SignUp({ setPopup }) {
     const [loading, setLoading] = useState(false)
     const signUp = (e) => {
         e.preventDefault()
-        setLoading(true)
-        const { email, password, username, name } = e.target
-        console.log(email.value, password.value, username.value, name.value);
-        Server.newUser(email.value, password.value, username.value, name.value).then(res => {
-            console.log("SUCCESS:", res)
-            localStorage.setItem("id", res.data.id)
-            context.setUser(res.data)
-            router.push("/home")
-            context.setLoggedIn(true)
-            setLoading(false)
-        }).catch(err => {
-            console.log("THERE IS AN ERROR: ", err.response.data);
-            alert("There has been an error, please try later.")
-            setLoading(false)
-        })
+        if(!loading){
+            setLoading(true)
+            const { email, password, username, name } = e.target
+            console.log(email.value, password.value, username.value, name.value);
+            Server.newUser(email.value, password.value, username.value, name.value).then(res => {
+                console.log("SUCCESS:", res)
+                localStorage.setItem("id", res.data.id)
+                context.setUser(res.data)
+                router.push("/home")
+                context.setLoggedIn(true)
+                setLoading(false)
+            }).catch(err => {
+                console.log("THERE IS AN ERROR: ", err.response.data);
+                alert("There has been an error, please try later.")
+                setLoading(false)
+            })
+        }
     }
     return (
         <Popup setPopup={setPopup} onSubmit={signUp}>
@@ -102,8 +106,8 @@ function SignUp({ setPopup }) {
                 {loading ? <Oval
                     color='#9bd3f8'
                     secondaryColor='#ffffff'
-                    width={"1rem"}
-                    height={"1rem"} /> :
+                    width={"1.5rem"}
+                    height={"1.5rem"} /> :
                     <span>Sign up</span>}
 
             </button>
