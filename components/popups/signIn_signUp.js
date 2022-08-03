@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Server } from '../../API'
 import Context from '../../context'
 import DynamicInput from '../dynamicInput'
 import styles from './signIn_signUp.module.css'
-
+import { Oval } from "react-loader-spinner"
 function Popup({ children, onSubmit, setPopup }) {
 
     const closePopup = () => {
@@ -26,8 +26,10 @@ function Popup({ children, onSubmit, setPopup }) {
 function SignIn({ setPopup }) {
     const context = useContext(Context)
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
     const signIn = (e) => {
         e.preventDefault()
+        setLoading(true)
         const { email, password } = e.target
         console.log(email.value, password.value);
         Server.getUser({ email: email.value, password: password.value }).then(res => {
@@ -38,13 +40,16 @@ function SignIn({ setPopup }) {
                 context.setUser(user)
                 router.push("/home")
                 context.setLoggedIn(true)
+                setLoading(false)
             }
             else {
                 alert("Wrong email or password.")
+                setLoading(false)
             }
         }).catch(err => {
             console.log("THERE IS AN ERROR: ", err.response.data);
-            alert(err.response.data.join(' '))
+            alert("There has been an error, please try later.")
+            setLoading(false)
         })
     }
     return (
@@ -53,17 +58,24 @@ function SignIn({ setPopup }) {
             <DynamicInput theme={"dark"} required type={"email"} name={"email"} placeholder={"Email"} />
             <DynamicInput theme={"dark"} required type={"password"} name={"password"} placeholder={"Password"} />
             <button type='submit' className={styles.button}>
-                <span>Sign in</span>
+                {loading ? <Oval
+                    color='#9bd3f8'
+                    secondaryColor='#ffffff'
+                    width={"1rem"}
+                    height={"1rem"} /> :
+                    <span>Sign in</span>}
             </button>
         </Popup>
     )
 }
 
-function SignUp({setPopup}) {
+function SignUp({ setPopup }) {
     const context = useContext(Context)
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
     const signUp = (e) => {
         e.preventDefault()
+        setLoading(true)
         const { email, password, username, name } = e.target
         console.log(email.value, password.value, username.value, name.value);
         Server.newUser(email.value, password.value, username.value, name.value).then(res => {
@@ -72,9 +84,11 @@ function SignUp({setPopup}) {
             context.setUser(res.data)
             router.push("/home")
             context.setLoggedIn(true)
+            setLoading(false)
         }).catch(err => {
             console.log("THERE IS AN ERROR: ", err.response.data);
-            alert(err.response.data.join(' '))
+            alert("There has been an error, please try later.")
+            setLoading(false)
         })
     }
     return (
@@ -85,24 +99,30 @@ function SignUp({setPopup}) {
             <DynamicInput theme={"dark"} required name={"username"} placeholder={"Username"} />
             <DynamicInput theme={"dark"} required name={"name"} placeholder={"Name"} />
             <button type='submit' className={styles.button}>
-                <span>Sign up</span>
+                {loading ? <Oval
+                    color='#9bd3f8'
+                    secondaryColor='#ffffff'
+                    width={"1rem"}
+                    height={"1rem"} /> :
+                    <span>Sign up</span>}
+
             </button>
         </Popup>
     )
 }
 
-export default function Main({type, setPopup}){
-    if(type === "sign-in"){
-        return(
-            <SignIn setPopup={setPopup}/>
+export default function Main({ type, setPopup }) {
+    if (type === "sign-in") {
+        return (
+            <SignIn setPopup={setPopup} />
         )
     }
-    else if(type==="sign-up"){
-        return(
-            <SignUp setPopup={setPopup}/>
+    else if (type === "sign-up") {
+        return (
+            <SignUp setPopup={setPopup} />
         )
     }
-    else{
+    else {
         return <></>
     }
 }
