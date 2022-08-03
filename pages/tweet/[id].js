@@ -2,8 +2,8 @@ import Image from 'next/image'
 import React, { useContext, useState } from 'react'
 import styles from './tweet.module.css'
 import { useRouter } from 'next/router'
-import { Server } from '../API';
-import Context from '../context'
+import { Server } from './../../API';
+import Context from '../../context'
 function relativeTime(date_in_ms) {
 
 
@@ -63,60 +63,61 @@ function relativeTime(date_in_ms) {
 
 export default function Tweet({ tweet_, refreshTweets }) {
 
-  const router = useRouter()
-  const context = useContext(Context)
+  // const router = useRouter()
+  // const context = useContext(Context)
 
-  const [tweet, setTweet] = useState(tweet_?.tweet || tweet_) // IF IT IS A RETWEET, THE FIRST ONE WILL RETURN FALSY
+  // const [tweet, setTweet] = useState(tweet_?.tweet || tweet_) // IF IT IS A RETWEET, THE FIRST ONE WILL RETURN FALSY
 
-  const alreadyInteracted =
-    [tweet.interactions?.likes?.includes(context.user.id),
-    tweet.interactions?.retweets?.includes(context.user.id),
-    tweet.interactions?.comments?.includes(context.user.id),]
+  // const alreadyInteracted =
+  //   [tweet.interactions?.likes?.includes(context.user.id),
+  //   tweet.interactions?.retweets?.includes(context.user.id),
+  //   tweet.interactions?.comments?.includes(context.user.id),]
 
-  const on_interaction = (type) => {
-    if (alreadyInteracted[type]) {
-      deleteInteraction(type)
-    }
-    else {
-      newInteraction(type)
-    }
-  }
+  // const on_interaction = (type) => {
+  //   if (alreadyInteracted[type]) {
+  //     deleteInteraction(type)
+  //   }
+  //   else {
+  //     newInteraction(type)
+  //   }
+  // }
 
-  const newInteraction = (type) => {
+  // const newInteraction = (type) => {
 
-    Server.newInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }, { id: tweet.user.id, username: tweet.user.id }, new Date(), {}).then(res => {
-      refreshTweet()
-      type === 1 && refreshTweets()
-    }).catch(err => {
-      console.log(err);
-    })
+  //   Server.newInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }, { id: tweet.user.id, username: tweet.user.id }, new Date(), {}).then(res => {
+  //     refreshTweet()
+  //     type === 1 && refreshTweets()
+  //   }).catch(err => {
+  //     console.log(err);
+  //   })
 
-  }
+  // }
 
-  const deleteInteraction = (type) => {
+  // const deleteInteraction = (type) => {
 
-    Server.deleteInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }).then(res => {
-      refreshTweet()
-      type === 1 && refreshTweets()
-    }).catch(err => {
-      console.log(err);
-    })
+  //   Server.deleteInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }).then(res => {
+  //     refreshTweet()
+  //     type === 1 && refreshTweets()
+  //   }).catch(err => {
+  //     console.log(err);
+  //   })
 
-  }
+  // }
 
-  function refreshTweet() {
-    Server.getTweets({ id: tweet.id }).then(res => {
-      setTweet(res.data[0])
-    })
-  }
+  // function refreshTweet() {
+  //   Server.getTweets({ id: tweet.id }).then(res => {
+  //     setTweet(res.data[0])
+  //   })
+  // }
 
 
-  function goProfile() {
-    router.push(`/profile/${tweet?.user?.username}`)
-  }
+  // function goProfile() {
+  //   router.push(`/profile/${tweet?.user?.username}`)
+  // }
   return (
-    <div className={styles.container}>
+    // <div className={styles.container}>
 
-    </div>
+    // </div>
+    <div>SLM</div>
   )
 }
