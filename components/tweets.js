@@ -3,12 +3,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Server } from '../API'
 import Context from '../context'
 import Tweet from './tweet'
-import { Oval } from  'react-loader-spinner'
+import { Oval } from 'react-loader-spinner'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 var key = 0
-const keyGenerator= () =>{
-  key = key + 1
-  return key
+const keyGenerator = () => {
+    key = key + 1
+    return key
 }
 
 export default function Tweets({ query }) {
@@ -30,36 +31,52 @@ export default function Tweets({ query }) {
         })
     }
 
-    useEffect(()=>{refreshTweets(true)}, [context.user])
+    useEffect(() => { refreshTweets(true) }, [context.user])
 
-    if(!loading){
+    if (!loading) {
         return (
-            <>
+
+            <TransitionGroup>
                 {tweets.map(
                     tweet => {
-                        if(tweet.retweet){
-                            return(
-                                <Tweet key={keyGenerator()} retweet={true} tweet_={tweet}  refreshTweets={refreshTweets}/>
+                        if (tweet.retweet) {
+                            return (
+                                <CSSTransition
+                                    key={keyGenerator()}
+                                    timeout={500}
+                                    classNames="tweetAnimation"
+                                >
+                                    <Tweet retweet={true} tweet_={tweet} refreshTweets={refreshTweets} />
+                                </CSSTransition>
+                                
                             )
                         }
-                        else{
-                            return(
-                                <Tweet key={keyGenerator()} tweet_={tweet} refreshTweets={refreshTweets}/>
+                        else {
+                            return (
+                                <CSSTransition
+                                    key={keyGenerator()}
+                                    timeout={500}
+                                    classNames="tweetAnimation"
+                                >
+                                    <Tweet tweet_={tweet} refreshTweets={refreshTweets} />
+                                </CSSTransition>
+
                             )
                         }
                     }
                 )}
-            </>
+
+            </TransitionGroup>
         )
     }
-    else{
-        return(
-            <div style={{display:"flex", justifyContent:"center", paddingTop:"5rem", height:"100vh", width:"100%"}}>
-                <Oval 
-            color='#1DA1F2'
-            secondaryColor='#74c1f1'
-            width={"3rem"}
-            height={"3rem"}/>
+    else {
+        return (
+            <div style={{ display: "flex", justifyContent: "center", paddingTop: "5rem", height: "100vh", width: "100%" }}>
+                <Oval
+                    color='#1DA1F2'
+                    secondaryColor='#74c1f1'
+                    width={"3rem"}
+                    height={"3rem"} />
             </div>
         )
     }

@@ -1,9 +1,27 @@
-.container{
-
-    width:100%
+.container-enter {
+    transition: 400ms;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 500ms ease-in;
 }
 
-.retweeted_by{
+.container-enter-active{
+    opacity:1;
+    transition: opacity 500ms ease-in;
+}
+
+.container-leave-active{
+    opacity:1;
+    transition: opacity 500ms ease-in;
+}
+
+.container-leave{
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}
+
+
+.retweeted_by {
     color: #798690;
     font-size: small;
     font-weight: bold;
@@ -20,8 +38,8 @@
     justify-content: space-around;
 }
 
-@media only screen and (max-width: 500px){
-    .main{
+@media only screen and (max-width: 500px) {
+    .main {
         justify-content: space-between;
     }
 }
@@ -76,20 +94,23 @@
     margin-top: .7rem;
 }
 
-.buttons > *{ /* .iconNumberContainerS */
+.buttons>* {
+    /* .iconNumberContainerS */
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.buttons > * > *:first-child{ /* .iconContainer */
+.buttons>*>*:first-child {
+    /* .iconContainer */
     display: flex;
-    height:2rem;
+    height: 2rem;
     width: 2rem;
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
 }
+
 /*
 comment bg: #E1EEF6
 comment text:#7FC4F3
@@ -101,32 +122,32 @@ like bg: #F7E0EB
 like text: #F91880
 */
 
-.buttons > *{
+.buttons>* {
     transition: 200ms;
 }
 
-.buttons > *:first-child:hover .iconContainer{
+.buttons>*:first-child:hover .iconContainer {
     background-color: #E1EEF6;
 }
 
-.buttons >*:first-child:hover{
-    color:#7FC4F3
+.buttons>*:first-child:hover {
+    color: #7FC4F3
 }
 
-.buttons > *:nth-child(2):hover .iconContainer{
+.buttons>*:nth-child(2):hover .iconContainer {
     background-color: #DEF1EB;
 }
 
-.buttons >*:nth-child(2):hover{
-    color:#54CFA6
+.buttons>*:nth-child(2):hover {
+    color: #54CFA6
 }
 
-.buttons > *:nth-child(3):hover .iconContainer{
+.buttons>*:nth-child(3):hover .iconContainer {
     background-color: #F7E0EB;
 }
 
-.buttons >*:nth-child(3):hover{
-    color:#F91880
+.buttons>*:nth-child(3):hover {
+    color: #F91880
 }
 
 /* .iconNumberContainer:hover .iconContainer{
@@ -137,6 +158,6 @@ like text: #F91880
     color: #7FC4F3;
 } */
 
-.number{
+.number {
     font-size: small;
 }

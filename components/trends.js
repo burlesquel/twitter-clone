@@ -72,7 +72,7 @@ export default function Trends({ classname }) {
         })
     }
 
-    useEffect(refreshTrends, [])
+    useEffect(refreshTrends, [router.pathname])
 
     if (trends) {
         return (

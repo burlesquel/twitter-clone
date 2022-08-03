@@ -31,3 +31,23 @@ a {
   color:#5e6970;
   font-size: larger;
 }
+
+.tweetAnimation-enter{
+  opacity: 0;
+}
+
+.tweetAnimation-enter-active{
+  opacity: 1;
+  transition: 500ms ease-in;
+}
+
+.tweetAnimation-exit{
+  opacity: 1;
+}
+
+.tweetAnimation-exit-active{
+  opacity: 0;
+  transition: 500ms ease-in;
+}
+
+
