@@ -28,12 +28,16 @@ export default function Tweets({ query }) {
     // console.log("router.aspath: ", router.asPath);
     // console.log("router.basePath: ", router.basePath);
 
-    const getTweets = (setLoadingTrue = false, paginated = false) => {
+    const refreshTweetsAfterRetweet = () =>{
+
+    }
+
+    const getTweets = (setLoadingTrue = false, paginated = false, ) => {
 
         setLoadingTrue && setLoading(true)
 
         if (paginated) {
-            Server.getTweets({ ...query, limit: limit, page: page }).then(res => {
+            Server.getTweets({ ...query, limit: limit, page: page}).then(res => {
                 if (res.data.length === 0) {
                     setHasMore(false)
                     setDataLength(0)
@@ -57,7 +61,7 @@ export default function Tweets({ query }) {
         }
         else {
             Server.getTweets({ ...query, limit: 20, page: 0 }).then(res => {
-                if(res.data.length === 0){
+                if (res.data.length === 0) {
                     setHasMore(false)
                     setDataLength(0)
                 }
@@ -71,7 +75,7 @@ export default function Tweets({ query }) {
                 setLoading(false)
             })
         }
-        
+
 
         console.log("refreshing tweets with: ", query);
         console.log("getting tweets with the page of ", page);
@@ -103,12 +107,20 @@ export default function Tweets({ query }) {
                     tweet => {
                         if (tweet.retweet) {
                             return (
-                                <Tweet retweet={true} key={keyGenerator()} tweet_={tweet} refreshTweets={getTweets} />
+                                <Tweet
+                                    key={keyGenerator()}
+                                    tweet_={tweet}
+                                    reloadTweets={getTweets}
+                                    page={page} />
                             )
                         }
                         else {
                             return (
-                                <Tweet tweet_={tweet} key={keyGenerator()} refreshTweets={getTweets} />
+                                <Tweet 
+                                tweet_={tweet} 
+                                key={keyGenerator()} 
+                                reloadTweets={getTweets} 
+                                page={page} />
                             )
                         }
                     }

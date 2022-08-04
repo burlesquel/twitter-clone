@@ -62,7 +62,7 @@ function relativeTime(date_in_ms) {
 //   }
 // }
 
-export default function Tweet({ tweet_, refreshTweets }) {
+export default function Tweet({ tweet_, refreshTweets, reloadTweets, page }) {
 
   const router = useRouter()
   const context = useContext(Context)
@@ -90,9 +90,15 @@ export default function Tweet({ tweet_, refreshTweets }) {
       setTweet(pseudoTweet)
     }
 
+    if(type ===1){
+      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, retweets: [...tweet.interactions.retweets, context.user.id] } }
+      setTweet(pseudoTweet)
+    }
+
     Server.newInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }, { id: tweet.user.id, username: tweet.user.id }, new Date(), {}).then(res => {
+      console.log(page);
+      (type === 1 && page === 20) && reloadTweets()
       type === 0 && refreshTweet()
-      type === 1 && refreshTweets()
     }).catch(err => {
       type === 0 && refreshTweet()
     })
@@ -104,10 +110,15 @@ export default function Tweet({ tweet_, refreshTweets }) {
       const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, likes: tweet.interactions.likes.filter(user_id => user_id !== context.user.id) } }
       setTweet(pseudoTweet)
     }
+    if(type === 1){
+      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, retweets: tweet.interactions.retweets.filter(user_id => user_id !== context.user.id) } }
+      setTweet(pseudoTweet)
+    }
 
     Server.deleteInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }).then(res => {
       type === 0 && refreshTweet()
-      type === 1 && refreshTweets()
+      console.log("PAGE: ",page);
+      (type === 1 && page === 20) && reloadTweets()
     }).catch(err => {
       type === 0 && refreshTweet()
     })
