@@ -20,6 +20,7 @@ export default function Tweets({ query }) {
     const router = useRouter()
     const context = useContext(Context)
     const [tweets, setTweets] = useState([])
+    const [loading, setLoading] = useState(false)
     const [hasMore, setHasMore] = useState(true)
     const [dataLength, setDataLength] = useState(20)
     // YOU CAN CREATE A WAITING STATE
@@ -28,16 +29,21 @@ export default function Tweets({ query }) {
     // console.log("router.basePath: ", router.basePath);
 
     const getTweets = (setLoadingTrue = false, paginated = false) => {
+
+        setLoadingTrue && setLoading(true)
+
         if (paginated) {
             Server.getTweets({ ...query, limit: limit, page: page }).then(res => {
                 if (res.data.length === 0) {
                     setHasMore(false)
                     setDataLength(0)
+                    setLoading(false)
                 }
                 else {
                     setHasMore(true)
                     setDataLength(res.data.length)
                     setTweets(tweets.concat(res.data))
+                    setLoading(false)
                 }
 
                 page = page + limit
@@ -45,20 +51,21 @@ export default function Tweets({ query }) {
             }).catch(err => {
                 // ERROR ALGHORITM
                 console.log("ERROR WHILE GETTING TWEETS: ", err);
-                setTweets([])
+                setLoading(false)
             })
 
         }
         else {
             Server.getTweets({ ...query, limit: 20, page: 0 }).then(res => {
                 setTweets(res.data)
+                setLoading(false)
             }).catch(err => {
                 // ERROR ALGHORITM
                 console.log("ERROR WHILE GETTING TWEETS: ", err);
-                setTweets([])
+                setLoading(false)
             })
         }
-        setLoadingTrue && setTweets([])
+        
 
         console.log("refreshing tweets with: ", query);
         console.log("getting tweets with the page of ", page);
@@ -68,7 +75,7 @@ export default function Tweets({ query }) {
     useEffect(() => { getTweets(false, false) }, [router])
 
 
-    if (tweets.length !== 0) {
+    if (!loading) {
         return (
             <InfiniteScroll
                 dataLength={dataLength}
