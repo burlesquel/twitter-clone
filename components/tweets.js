@@ -57,11 +57,15 @@ export default function Tweets({ query }) {
         }
         else {
             Server.getTweets({ ...query, limit: 20, page: 0 }).then(res => {
+                setHasMore(false)
+                setDataLength(0)
                 setTweets(res.data)
                 setLoading(false)
             }).catch(err => {
                 // ERROR ALGHORITM
                 console.log("ERROR WHILE GETTING TWEETS: ", err);
+                setHasMore(false)
+                setDataLength(0)
                 setLoading(false)
             })
         }
