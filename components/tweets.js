@@ -57,8 +57,10 @@ export default function Tweets({ query }) {
         }
         else {
             Server.getTweets({ ...query, limit: 20, page: 0 }).then(res => {
-                setHasMore(false)
-                setDataLength(0)
+                if(res.data.length === 0){
+                    setHasMore(false)
+                    setDataLength(0)
+                }
                 setTweets(res.data)
                 setLoading(false)
             }).catch(err => {
