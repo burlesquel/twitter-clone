@@ -57,7 +57,9 @@ function Tweets({ query }) {
         }
     }
 
-    useEffect(handleLoadMore(0, true),[query])
+    useEffect(()=>{
+        handleLoadMore(0, true)
+    },[query])
 
     useEffect(() => {
         context.socket.on("delete-tweet", tweet => {
