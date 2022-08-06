@@ -45,23 +45,19 @@ function Tweets({ query }) {
         })
     }
 
-    function handleLoadMore(page_) {
+    function handleLoadMore(page_, refresh = false) {
         console.log("getting more data, page:", page_);
         if (!loading) {
             setLoading(true);
             Server.getTweets({ ...query, limit: limit, page: page_ * limit }).then(res => {
                 setHasNextPage(res.data.length !== 0);
-                setTweets([...tweets, ...res.data]);
+                refresh ? setTweets(res.data) : setTweets([...tweets, ...res.data]);
                 setLoading(false);
             })
         }
     }
 
-    useEffect(refreshTweets,[query])
-
-    // useEffect(() => {
-    //     handleLoadMore(0)
-    // }, [])
+    useEffect(handleLoadMore(0, true),[query])
 
     useEffect(() => {
         context.socket.on("delete-tweet", tweet => {
