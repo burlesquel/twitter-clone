@@ -38,6 +38,13 @@ function Tweets({ query }) {
         setTweets(newArray)
     }
 
+    function refreshTweets(){
+        setTweets([])
+        Server.getTweets({ ...query, limit: limit, page: page_ * limit }).then(res => {
+            setTweets(res.data);
+        })
+    }
+
     function handleLoadMore(page_) {
         console.log("getting more data, page:", page_);
         if (!loading) {
@@ -50,9 +57,11 @@ function Tweets({ query }) {
         }
     }
 
-    useEffect(() => {
-        handleLoadMore(0)
-    }, [])
+    useEffect(refreshTweets,[query])
+
+    // useEffect(() => {
+    //     handleLoadMore(0)
+    // }, [])
 
     useEffect(() => {
         context.socket.on("delete-tweet", tweet => {
