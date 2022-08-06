@@ -38,7 +38,7 @@ a {
 
 .tweetAnimation-enter-active{
   opacity: 1;
-  transition: 500ms ease-in;
+  transition: 300ms ease-in;
 }
 
 .tweetAnimation-exit{
@@ -47,7 +47,7 @@ a {
 
 .tweetAnimation-exit-active{
   opacity: 0;
-  transition: 500ms ease-in;
+  transition: 300ms ease-in;
 }
 
 

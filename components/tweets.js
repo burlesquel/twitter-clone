@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Server } from '../API'
 import Context from '../context'
 import Tweet from './tweet'
 import { Oval } from 'react-loader-spinner'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroller';
+import { CSSTransition, TransitionGroup, TransitionStatus } from 'react-transition-group'
 
 var key = 0
 const keyGenerator = () => {
@@ -13,120 +14,98 @@ const keyGenerator = () => {
 }
 
 var limit = 20
-var page = 20
+var page = 0
+// var page = 1
 
-export default function Tweets({ query }) {
+
+function Tweets({ query }) {
 
     const router = useRouter()
     const context = useContext(Context)
     const [tweets, setTweets] = useState([])
     const [loading, setLoading] = useState(false)
-    const [hasMore, setHasMore] = useState(true)
-    const [dataLength, setDataLength] = useState(20)
-    // YOU CAN CREATE A WAITING STATE
-    // console.log("router.pathname: ", router.pathname);
-    // console.log("router.aspath: ", router.asPath);
-    // console.log("router.basePath: ", router.basePath);
+    const [hasNextPage, setHasNextPage] = useState(true)
 
-    const refreshTweetsAfterRetweet = () =>{
-
+    function addTweet(tweet) {
+        const newArray = [tweet, ...tweets]
+        setTweets(newArray)
+    }
+    function removeTweet(tweet) {
+        console.log("removing tweet: ", tweet);
+        console.log("original tweets before removing tweet: ", tweets);
+        const newArray = tweets.filter(tweet_ => tweet_._id !== tweet._id)
+        console.log("new array:", newArray);
+        setTweets(newArray)
     }
 
-    const getTweets = (setLoadingTrue = false, paginated = false, ) => {
-
-        setLoadingTrue && setLoading(true)
-
-        if (paginated) {
-            Server.getTweets({ ...query, limit: limit, page: page}).then(res => {
-                if (res.data.length === 0) {
-                    setHasMore(false)
-                    setDataLength(0)
-                    setLoading(false)
-                }
-                else {
-                    setHasMore(true)
-                    setDataLength(res.data.length)
-                    setTweets(tweets.concat(res.data))
-                    setLoading(false)
-                }
-
-                page = page + limit
-
-            }).catch(err => {
-                // ERROR ALGHORITM
-                console.log("ERROR WHILE GETTING TWEETS: ", err);
-                setLoading(false)
-            })
-
-        }
-        else {
-            Server.getTweets({ ...query, limit: 20, page: 0 }).then(res => {
-                if (res.data.length === 0) {
-                    setHasMore(false)
-                    setDataLength(0)
-                }
-                setTweets(res.data)
-                setLoading(false)
-            }).catch(err => {
-                // ERROR ALGHORITM
-                console.log("ERROR WHILE GETTING TWEETS: ", err);
-                setHasMore(false)
-                setDataLength(0)
-                setLoading(false)
+    function handleLoadMore(page_) {
+        console.log("getting more data, page:", page_);
+        if (!loading) {
+            setLoading(true);
+            Server.getTweets({ ...query, limit: limit, page: page_ * limit }).then(res => {
+                setHasNextPage(res.data.length !== 0);
+                setTweets([...tweets, ...res.data]);
+                setLoading(false);
             })
         }
-
-
-        console.log("refreshing tweets with: ", query);
-        console.log("getting tweets with the page of ", page);
     }
 
-    useEffect(() => { getTweets(true, false) }, [])
-    useEffect(() => { getTweets(false, false) }, [router])
+    useEffect(() => {
+        handleLoadMore(0)
+    }, [])
 
+    useEffect(() => {
+        context.socket.on("delete-tweet", tweet => {
+            removeTweet(tweet)
+        })
+        context.socket.on("new-tweet", tweet => {
+            addTweet(tweet)
+        })
+        return () => {
+            context.socket.off("delete-tweet")
+            context.socket.off("new-tweet")
+        }
+    }, [tweets])
 
-    if (!loading) {
+    console.log("TWEETS ", tweets);
+
+    if (tweets.length !== 0) {
         return (
-            <InfiniteScroll
-                dataLength={dataLength}
-                endMessage={<span></span>}
-                hasMore={hasMore}
-                next={() => { getTweets(false, true) }}
-                loader={
-                    <div style={{ display: "flex", justifyContent: "center", padding: "3rem", width: "100%" }}>
+
+
+            <div style={{ minHeight: "100vh" }}>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={handleLoadMore}
+                    hasMore={hasNextPage}
+                    loader={<div style={{ display: "flex", justifyContent: "center", padding: "1rem", width: "100%" }}>
                         <Oval
                             color='#1DA1F2'
                             secondaryColor='#74c1f1'
                             width={"3rem"}
                             height={"3rem"} />
-                    </div>
-                }
-            >
+                    </div>}>
+                    <TransitionGroup>
+                        {tweets.map(
+                            tweet => {
+                                return (
+                                    <CSSTransition
+                                        timeout={300}
+                                        classNames={"tweetAnimation"}
+                                        key={`${tweet._id}-rt`}>
+                                        <Tweet
+                                            removeTweet={removeTweet}
+                                            key={`${tweet._id}-rt`}
+                                            tweet_={tweet} />
+                                    </CSSTransition>
+                                )
+                            }
+                        )}
+                    </TransitionGroup >
+                </InfiniteScroll>
+            </div>
 
-                {tweets.map(
-                    tweet => {
-                        if (tweet.retweet) {
-                            return (
-                                <Tweet
-                                    key={keyGenerator()}
-                                    tweet_={tweet}
-                                    reloadTweets={getTweets}
-                                    page={page} />
-                            )
-                        }
-                        else {
-                            return (
-                                <Tweet 
-                                tweet_={tweet} 
-                                key={keyGenerator()} 
-                                reloadTweets={getTweets} 
-                                page={page} />
-                            )
-                        }
-                    }
-                )}
 
-            </InfiniteScroll>
 
         )
     }
@@ -141,4 +120,7 @@ export default function Tweets({ query }) {
             </div>
         )
     }
+
 }
+
+export default React.memo(Tweets)

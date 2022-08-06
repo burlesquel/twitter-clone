@@ -4,6 +4,7 @@ import styles from './tweet.module.css'
 import { useRouter } from 'next/router'
 import { Server } from '../API';
 import Context from '../context'
+import { CSSTransition } from 'react-transition-group';
 
 function relativeTime(date_in_ms) {
 
@@ -62,81 +63,79 @@ function relativeTime(date_in_ms) {
 //   }
 // }
 
-export default function Tweet({ tweet_, refreshTweets, reloadTweets, page }) {
+export default function Tweet({ tweet_, removeTweet}) {
 
   const router = useRouter()
   const context = useContext(Context)
 
   const [tweet, setTweet] = useState(tweet_.retweet ? tweet_.tweet : tweet_) // IF IT IS A RETWEET, THE FIRST ONE WILL RETURN FALSY
 
-  const alreadyInteracted =
-    [tweet.interactions?.likes?.includes(context.user.id),
-    tweet.interactions?.retweets?.includes(context.user.id),
-    tweet.interactions?.comments?.includes(context.user.id),]
+  // useEffect(refreshTweet, [retweeted, liked])
+
+  function alreadyInteracted(type) {
+    if (type === 0) {
+      return tweet.interactions.likes.includes(context.user.id)
+    }
+    else if (type === 1) {
+      return tweet.interactions.retweets.includes(context.user.id)
+    }
+  }
 
   const on_interaction = (type) => {
-    if (alreadyInteracted[type]) {
+    console.log("1 PRESSED ON INTERACTION, TYPE: ", type);
+    if (alreadyInteracted(type)) {
+      console.log("2 ALREADY INTERACTED");
       deleteInteraction(type)
     }
     else {
+      console.log("2 HAS NOT BEEN INTERACTED BEFORE");
       newInteraction(type)
     }
   }
 
-  const newInteraction = (type) => {
-
-    if(type === 0){
-      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, likes: [...tweet.interactions.likes, context.user.id] } }
-      setTweet(pseudoTweet)
+  function newInteraction(type) {
+    console.log("3 NEW INTERACTION, TYPE: ", type);
+    const interaction = {
+      type: type,
+      tweet_id: tweet.id,
+      interactor_user: { id: context.user.id, username: context.user.username },
+      done_at: new Date(),
+      content: { comment: null }
     }
-
-    if(type ===1){
-      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, retweets: [...tweet.interactions.retweets, context.user.id] } }
-      setTweet(pseudoTweet)
-    }
-
-    Server.newInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }, { id: tweet.user.id, username: tweet.user.id }, new Date(), {}).then(res => {
-      console.log(page);
-      (type === 1 && page === 20) && reloadTweets()
-      type === 0 && refreshTweet()
-    }).catch(err => {
-      type === 0 && refreshTweet()
-    })
-
+    console.log("4 interaction object: ", interaction);
+    console.log("5 sending via socket 'new-interaction'");
+    context.socket.emit('new-interaction', interaction)
   }
 
-  const deleteInteraction = (type) => {
-    if(type === 0){
-      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, likes: tweet.interactions.likes.filter(user_id => user_id !== context.user.id) } }
-      setTweet(pseudoTweet)
+  function deleteInteraction(type) {
+    console.log("3 DELETE INTERACTIONS, TYPE:", type);
+    const interaction = {
+      type: type,
+      tweet_id: tweet.id,
+      interactor_user: { id: context.user.id, username: context.user.username },
+      done_at: new Date(),
+      content: { comment: null }
     }
-    if(type === 1){
-      const pseudoTweet = { ...tweet, interactions: { ...tweet.interactions, retweets: tweet.interactions.retweets.filter(user_id => user_id !== context.user.id) } }
-      setTweet(pseudoTweet)
-    }
-
-    Server.deleteInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }).then(res => {
-      type === 0 && refreshTweet()
-      console.log("PAGE: ",page);
-      (type === 1 && page === 20) && reloadTweets()
-    }).catch(err => {
-      type === 0 && refreshTweet()
-    })
-
+    console.log("4 interaction object: ", interaction);
+    console.log("5 sending via socket 'delete-interaction'");
+    context.socket.emit('delete-interaction', interaction)
   }
 
-  function refreshTweet() {
-    Server.getTweets({ id: tweet.id }).then(res => {
-      setTweet(res.data[0])
+  useEffect(() => {
+    context.socket.on(`render-tweet-${tweet_.retweet ? tweet_.tweet_id : tweet_.id}`, _tweet_ => {
+
+      console.log("12a render-tweet-", tweet_.retweet ? tweet_.tweet_id : tweet_.id, " received: ", _tweet_);
+      setTweet(_tweet_.retweet ? _tweet_.tweet : _tweet_)
+
     })
-  }
+  }, [])
 
 
-  function goProfile() {
+
+ function goProfile() {
     router.push(`/profile/${tweet?.user?.username}`)
   }
   return (
-
 
     <div className={styles.container}>
       {tweet_.retweet && <span className={styles.retweeted_by}><i className='bi bi-recycle'></i> <span onClick={() => { router.push(`/profile/${tweet_.interactor_user?.username}`) }}> {tweet_.interactor_user?.username} retweeted</span></span>}
@@ -156,24 +155,28 @@ export default function Tweet({ tweet_, refreshTweets, reloadTweets, page }) {
               <span className={styles.number}>{tweet?.interactions?.comments?.length}</span>
             </div>
 
-            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted[1] && "#54CFA6" }}  >
+            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted(1) && "#54CFA6" }}  >
               <div onClick={() => { on_interaction(1) }} className={styles.iconContainer}><i className='bi bi-recycle'></i></div>
               <span className={styles.number}>{tweet?.interactions?.retweets?.length}</span>
             </div>
 
-            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted[0] && "#F91880" }}>
-              <div onClick={() => { on_interaction(0) }} className={styles.iconContainer}><i className={`bi bi-heart${alreadyInteracted[0] ? "-fill" : ""}`}></i></div>
+            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted(0) && "#F91880" }}>
+              <div onClick={() => { on_interaction(0) }} className={styles.iconContainer}><i className={`bi bi-heart${alreadyInteracted(0) ? "-fill" : ""}`}></i></div>
               <span className={styles.number}>{tweet?.interactions?.likes?.length}</span>
             </div>
 
             <div className={styles.iconNumberContainer}>
-              <div onClick={() => { alert("Very soon :)") }} className={styles.iconContainer}><i className='bi bi-upload'></i></div>
+              <div onClick={() => {
+                removeTweet(tweet_)
+              }} className={styles.iconContainer}><i className='bi bi-upload'></i></div>
             </div>
           </div>
         </div>
 
       </div>
     </div>
-
+  
   )
 }
+
+// export default React.memo(Tweet)
