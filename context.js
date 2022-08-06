@@ -1,7 +1,8 @@
 import { useRouter } from "next/router"
 import { createContext, useEffect, useState } from "react"
 import io from 'socket.io-client';
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
+const socket = io("https://twtr-clone-server.herokuapp.com")
 
 const Context = createContext({})
 
