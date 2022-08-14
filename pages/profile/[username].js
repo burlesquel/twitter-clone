@@ -23,7 +23,7 @@ function Profile() {
     return (
       <div className={styles.main}>
         <ProfileDetails self={username === context?.user?.username ? true : false} user={user} />
-        <Tweets  query={ { $or: [ { 'interactor_user.username': username }, { 'user.username': username } ] }}/>
+        <Tweets profile_id={user.id} query={{ $or: [{ 'interactor_user.username': username }, { 'user.username': username }] }} />
       </div>
     )
   }

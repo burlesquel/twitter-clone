@@ -35,7 +35,7 @@ export const ContextProvider = ({ children }) => {
         refresh: refresh,
         setRefresh: setRefresh,
 
-        socket:socket
+        socket: socket
 
     }
 

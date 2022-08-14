@@ -2,45 +2,9 @@ import Image from 'next/image'
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './tweet.module.css'
 import { useRouter } from 'next/router'
-import { Server } from '../API';
 import Context from '../context'
-import { CSSTransition } from 'react-transition-group';
-
-function relativeTime(date_in_ms) {
-
-
-  var msPerMinute = 60 * 1000;
-  var msPerHour = msPerMinute * 60;
-  var msPerDay = msPerHour * 24;
-  var msPerMonth = msPerDay * 30;
-  var msPerYear = msPerDay * 365;
-
-  var elapsed = new Date().getTime() - date_in_ms;
-
-  if (elapsed < msPerMinute) {
-    return Math.round(elapsed / 1000) + 's';
-  }
-
-  else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + 'm';
-  }
-
-  else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + 'h';
-  }
-
-  else if (elapsed < msPerMonth) {
-    return Math.round(elapsed / msPerDay) + 'd';
-  }
-
-  else if (elapsed < msPerYear) {
-    return Math.round(elapsed / msPerMonth) + 'mo';
-  }
-
-  else {
-    return Math.round(elapsed / msPerYear) + 'y';
-  }
-}
+import { relativeTime } from '../utility/functions';
+import InteractionButtons from './minimal/interactionButtons'
 
 
 // {
@@ -137,7 +101,7 @@ export default function Tweet({ tweet_, removeTweet}) {
   }
   return (
 
-    <div className={styles.container}>
+    <div onClick={()=>{router.push(`/tweet/${tweet.id}`)}} className={styles.container}>
       {tweet_.retweet && <span className={styles.retweeted_by}><i className='bi bi-recycle'></i> <span onClick={() => { router.push(`/profile/${tweet_.interactor_user?.username}`) }}> {tweet_.interactor_user?.username} retweeted</span></span>}
       <div className={styles.main}>
 
@@ -148,29 +112,7 @@ export default function Tweet({ tweet_, removeTweet}) {
         <div className={styles.content}>
           <span > <span onClick={goProfile}>{tweet?.user?.name}</span>  <span onClick={goProfile}>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
           <span>{tweet?.content?.text}</span>
-          <div className={styles.buttons}>
-
-            <div className={styles.iconNumberContainer} >
-              <div onClick={() => { alert("Very soon :)") }} className={styles.iconContainer}><i className='bi bi-chat'></i></div>
-              <span className={styles.number}>{tweet?.interactions?.comments?.length}</span>
-            </div>
-
-            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted(1) && "#54CFA6" }}  >
-              <div onClick={() => { on_interaction(1) }} className={styles.iconContainer}><i className='bi bi-recycle'></i></div>
-              <span className={styles.number}>{tweet?.interactions?.retweets?.length}</span>
-            </div>
-
-            <div className={styles.iconNumberContainer} style={{ color: alreadyInteracted(0) && "#F91880" }}>
-              <div onClick={() => { on_interaction(0) }} className={styles.iconContainer}><i className={`bi bi-heart${alreadyInteracted(0) ? "-fill" : ""}`}></i></div>
-              <span className={styles.number}>{tweet?.interactions?.likes?.length}</span>
-            </div>
-
-            <div className={styles.iconNumberContainer}>
-              <div onClick={() => {
-                removeTweet(tweet_)
-              }} className={styles.iconContainer}><i className='bi bi-upload'></i></div>
-            </div>
-          </div>
+          <InteractionButtons alreadyInteracted={alreadyInteracted} on_interaction={on_interaction} tweet={tweet}/>
         </div>
 
       </div>

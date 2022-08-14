@@ -18,7 +18,7 @@ var page = 0
 // var page = 1
 
 
-function Tweets({ query }) {
+function Tweets({ query, profile_id }) {
 
     const router = useRouter()
     const context = useContext(Context)
@@ -62,10 +62,10 @@ function Tweets({ query }) {
     },[query])
 
     useEffect(() => {
-        context.socket.on("delete-tweet", tweet => {
+        context.socket.on(`delete-tweet${profile_id ? `-${profile_id}` : ""}`, tweet => {
             removeTweet(tweet)
         })
-        context.socket.on("new-tweet", tweet => {
+        context.socket.on(`new-tweet${profile_id ? `-${profile_id}` : ""}`, tweet => {
             addTweet(tweet)
         })
         return () => {

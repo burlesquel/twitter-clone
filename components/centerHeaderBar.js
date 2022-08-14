@@ -18,7 +18,7 @@ export default function CenterHeaderBar({ className }) {
       </div>
     )
   }
-  if (currentRoute.includes("explore")) {
+  else if (currentRoute.includes("explore")) {
     return (
 
       <div className={` ${styles.main}`}>
@@ -71,15 +71,29 @@ export default function CenterHeaderBar({ className }) {
     )
   }
 
-  else if(currentRoute.includes("profile")){
+  else if (currentRoute.includes("profile")) {
+    const self = currentRoute.length === 2
     return (
       <div className={`${styles.profileBar} ${styles.main}`}>
 
-          <div onClick={router.back} className={styles.iconContainer}><i className='bi bi-arrow-left'></i></div>
-          <div>
-            <h3>{currentRoute.length === 2 ? context.user?.username : context.currentDisplayedProfile?.name}</h3>
-            <span>{currentRoute.length === 2 ? context.user?.tweets?.length : context.currentDisplayedProfile?.tweets?.length} Tweets</span>
-          </div>
+        <div onClick={router.back} className={styles.iconContainer}><i className='bi bi-arrow-left'></i></div>
+        <div>
+          <h3>{self ? context.user?.username : context.currentDisplayedProfile?.name}</h3>
+          <span>{self ? context.user?.tweets?.length : context.currentDisplayedProfile?.tweets?.length} Tweets</span>
+        </div>
+
+      </div>
+    )
+  }
+
+  else if (currentRoute.includes("tweet")) {
+    return (
+      <div className={`${styles.tweetBar} ${styles.main}`}>
+
+        <div onClick={router.back} className={styles.iconContainer}><i className='bi bi-arrow-left'></i></div>
+        <div>
+        <h3>Tweet</h3>
+        </div>
 
       </div>
     )

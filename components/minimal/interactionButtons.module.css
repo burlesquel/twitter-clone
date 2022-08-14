@@ -1,0 +1,66 @@
+.main{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: .7rem;
+}
+
+.main>* {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.main>*>*:first-child {
+    display: flex;
+    height: 2rem;
+    width: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+/*
+comment bg: #E1EEF6
+comment text:#7FC4F3
+
+retweet bg: #DEF1EB
+retweet text: #54CFA6
+
+like bg: #F7E0EB
+like text: #F91880
+*/
+
+.main>* {
+    transition: 200ms;
+}
+
+.main>*:first-child:hover .iconContainer {
+    background-color: #E1EEF6;
+}
+
+.main>*:first-child:hover {
+    color: #7FC4F3
+}
+
+.main>*:nth-child(2):hover .iconContainer {
+    background-color: #DEF1EB;
+}
+
+.main>*:nth-child(2):hover {
+    color: #54CFA6
+}
+
+.main>*:nth-child(3):hover .iconContainer {
+    background-color: #F7E0EB;
+}
+
+.main>*:nth-child(3):hover {
+    color: #F91880
+}
+
+
+.number {
+    font-size: small;
+}
