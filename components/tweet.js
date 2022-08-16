@@ -27,7 +27,7 @@ import InteractionButtons from './minimal/interactionButtons'
 //   }
 // }
 
-export default function Tweet({ tweet_, removeTweet}) {
+export default function Tweet({ tweet_, removeTweet }) {
 
   const router = useRouter()
   const context = useContext(Context)
@@ -96,12 +96,13 @@ export default function Tweet({ tweet_, removeTweet}) {
 
 
 
- function goProfile() {
+  function goProfile(e) {
+    e.stopPropagation()
     router.push(`/profile/${tweet?.user?.username}`)
   }
   return (
 
-    <div onClick={()=>{router.push(`/tweet/${tweet.id}`)}} className={styles.container}>
+    <div onClick={(e) => { router.push(`/tweet/${tweet.id}`); }} className={styles.container}>
       {tweet_.retweet && <span className={styles.retweeted_by}><i className='bi bi-recycle'></i> <span onClick={() => { router.push(`/profile/${tweet_.interactor_user?.username}`) }}> {tweet_.interactor_user?.username} retweeted</span></span>}
       <div className={styles.main}>
 
@@ -112,12 +113,12 @@ export default function Tweet({ tweet_, removeTweet}) {
         <div className={styles.content}>
           <span > <span onClick={goProfile}>{tweet?.user?.name}</span>  <span onClick={goProfile}>@{tweet?.user?.username} · {relativeTime(new Date(tweet?.created_at).getTime())}</span></span>
           <span>{tweet?.content?.text}</span>
-          <InteractionButtons alreadyInteracted={alreadyInteracted} on_interaction={on_interaction} tweet={tweet}/>
+          <InteractionButtons alreadyInteracted={alreadyInteracted} on_interaction={on_interaction} tweet={tweet} />
         </div>
 
       </div>
     </div>
-  
+
   )
 }
 
