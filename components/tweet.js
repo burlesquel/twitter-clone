@@ -98,12 +98,20 @@ export default function Tweet({ tweet_, removeTweet }) {
 
   function goProfile(e) {
     e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
     router.push(`/profile/${tweet?.user?.username}`)
   }
   return (
 
     <div onClick={(e) => { router.push(`/tweet/${tweet.id}`); }} className={styles.container}>
-      {tweet_.retweet && <span className={styles.retweeted_by}><i className='bi bi-recycle'></i> <span onClick={() => { router.push(`/profile/${tweet_.interactor_user?.username}`) }}> {tweet_.interactor_user?.username} retweeted</span></span>}
+      {tweet_.retweet &&
+        <span className={styles.retweeted_by}><i className='bi bi-recycle'></i>
+          <span onClick={(e) => {
+            e.stopPropagation();
+            e.nativeEvent.stopImmediatePropagation();
+            router.push(`/profile/${tweet_.interactor_user?.username}`)
+          }}> {tweet_.interactor_user?.username} retweeted</span></span>
+      }
       <div className={styles.main}>
 
         <div onClick={goProfile} className={styles.profilePicture}>

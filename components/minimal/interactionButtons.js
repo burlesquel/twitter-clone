@@ -21,6 +21,7 @@ export default function InteractionButtons({ tweet, on_interaction, alreadyInter
             <div >
                 <div onClick={(e) => {
                     e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation()
                     removeTweet(tweet)
                 }}><i className='bi bi-upload'></i></div>
             </div>
