@@ -67,6 +67,7 @@
     flex-direction: column;
     width: 84%;
     overflow-wrap: break-word;
+    gap: .2rem;
 
 }
 

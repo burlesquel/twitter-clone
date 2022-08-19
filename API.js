@@ -1,6 +1,6 @@
 import axios from "axios";
 const api_url = "https://twtr-clone-server.herokuapp.com"
-// const api_url = "http://localhost:5000"
+//const api_url = "http://localhost:5000"
 
 const Server = {
     newUser: async (email, password, username, name) => {
@@ -28,13 +28,13 @@ const Server = {
         return await axios.post(`${api_url}/interactions`, { type, tweet_id, interactor_user, opposite_user, done_at, content })
     },
     deleteInteraction: async (type, tweet_id, interactor_user,) => {
-        return await axios.delete(`${api_url}/interactions`, {data:{ type, tweet_id, interactor_user }})
+        return await axios.delete(`${api_url}/interactions`, { data: { type, tweet_id, interactor_user } })
     }
 }
 
 const entranceAlghorithm = async (context, localStorage, Router) => {
     const id = localStorage.getItem("id")
-    if(!context.loggedIn){
+    if (!context.loggedIn) {
         if (id && id != "undefined" && id != undefined) {
             // console.log("ID FOUND: ", id);
             Server.getUser({ id: id }).then(res => {
@@ -43,7 +43,7 @@ const entranceAlghorithm = async (context, localStorage, Router) => {
                     // console.log("USER FOUND: ", res.data[0]);
                     context.setUser(res.data[0])
                     context.setLoggedIn(true)
-                    context.socket.emit('logged-in', {id:user.id})
+                    context.socket.emit('logged-in', { id: user.id })
                 }
                 else {
                     console.log("COULDNT FIND ANY USER WITH THE FOLLOWING ID:", id);

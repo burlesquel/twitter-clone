@@ -32,4 +32,10 @@ function relativeTime(date_in_ms) {
     }
   }
 
-  export {relativeTime}
+  function getFormattedDate(date){
+    const formatted = new Date(date).toLocaleString("en-US", {month:"short", hour:"numeric", minute:"numeric", day:"numeric", year:"numeric", hour12:true}) // 'Aug 19, 2022, 4:56 AM'
+    const text = `${formatted.split(", ")[2]} · ${formatted.split(", ")[0]}, ${formatted.split(", ")[1]}`
+    return text
+  }
+
+  export {relativeTime, getFormattedDate}

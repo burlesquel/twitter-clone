@@ -3,13 +3,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: .7rem;
+
 }
 
 .main>* {
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor:pointer
 }
 
 .main>*>*:first-child {

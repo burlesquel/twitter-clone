@@ -1,11 +1,12 @@
-import Image from 'next/image'
-import React, { useContext, useState } from 'react'
-import styles from './tweet.module.css'
-import { useRouter } from 'next/router'
-import { Server } from './../../API';
-import Context from '../../context'
-import { relativeTime } from '../../utility/functions';
-import authenticatedRoute from '../../components/authenticatedRoute';
+import Image from "next/image";
+import React, { useContext, useEffect, useState } from "react";
+import styles from "./tweet.module.css";
+import { useRouter } from "next/router";
+import { Server } from "./../../API";
+import Context from "../../context";
+import authenticatedRoute from "../../components/authenticatedRoute";
+import { getFormattedDate } from "../../utility/functions";
+import InteractionButtons from "../../components/minimal/interactionButtons";
 
 // {
 //   id:"",
@@ -28,67 +29,83 @@ import authenticatedRoute from '../../components/authenticatedRoute';
 // }
 
 function Tweet() {
-  const router = useRouter()
-  const context = useContext(Context)
-  const { id } = router.query
+  const router = useRouter();
+  const context = useContext(Context);
+  const { id } = router.query;
 
+  const [tweet, setTweet] = useState();
 
-  // const [tweet, setTweet] = useState(tweet_?.tweet || tweet_) // IF IT IS A RETWEET, THE FIRST ONE WILL RETURN FALSY
+  useEffect(() => {
+    Server.getTweets({ id: id })
+      .then((res) => {
+        console.log(res.data[0]);
+        setTweet(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    context.socket.on(`render-tweet-${id}`, (_tweet_) => {
+      console.log("RENDER TWEET: ", _tweet_);
+      setTweet(_tweet_.retweet ? _tweet_.tweet : _tweet_)
+    });
+  }, []);
 
-  // const alreadyInteracted =
-  //   [tweet.interactions?.likes?.includes(context.user.id),
-  //   tweet.interactions?.retweets?.includes(context.user.id),
-  //   tweet.interactions?.comments?.includes(context.user.id),]
-
-  // const on_interaction = (type) => {
-  //   if (alreadyInteracted[type]) {
-  //     deleteInteraction(type)
-  //   }
-  //   else {
-  //     newInteraction(type)
-  //   }
-  // }
-
-  // const newInteraction = (type) => {
-
-  //   Server.newInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }, { id: tweet.user.id, username: tweet.user.id }, new Date(), {}).then(res => {
-  //     refreshTweet()
-  //     type === 1 && refreshTweets()
-  //   }).catch(err => {
-  //     console.log(err);
-  //   })
-
-  // }
-
-  // const deleteInteraction = (type) => {
-
-  //   Server.deleteInteraction(type, tweet.id, { id: context.user.id, username: context.user.username }).then(res => {
-  //     refreshTweet()
-  //     type === 1 && refreshTweets()
-  //   }).catch(err => {
-  //     console.log(err);
-  //   })
-
-  // }
-
-  // function refreshTweet() {
-  //   Server.getTweets({ id: tweet.id }).then(res => {
-  //     setTweet(res.data[0])
-  //   })
-  // }
-
-
-  // function goProfile() {
-  //   router.push(`/profile/${tweet?.user?.username}`)
-  // }
-  return (
-    // <div className={styles.container}>
-
-    // </div>
-
-    <div>{id}</div>
-
-  )
+  if (tweet) {
+    return (
+      <div className={styles.main}>
+        <div className={styles.tweet}>
+          <div className={styles.profilePicAndDetails}>
+            <div className={styles.profilePhoto}>
+              {tweet?.user?.profile_photo_uri && (
+                <Image
+                  objectFit="cover"
+                  layout="fill"
+                  src={tweet.user.profile_photo_uri}
+                />
+              )}
+            </div>
+            <div className={styles.names}>
+              <span>{tweet.user.name}</span>
+              <span>{tweet.user.username}</span>
+            </div>
+          </div>
+          <div className={styles.tweetContent}>
+            <span>{tweet.content.text}</span>
+          </div>
+          <div className={styles.details}>
+            <span>{getFormattedDate(tweet.created_at)}</span>
+          </div>
+        </div>
+        <div className={styles.stats}>
+          <span>
+            <span style={{ color: "black", fontWeight: "bold" }}>
+              {tweet.interactions.comments.length}
+            </span>{" "}
+            Comments
+          </span>
+          <span>
+            <span style={{ color: "black", fontWeight: "bold" }}>
+              {tweet.interactions.retweets.length}
+            </span>{" "}
+            Retweets
+          </span>
+          <span>
+            <span style={{ color: "black", fontWeight: "bold" }}>
+              {tweet.interactions.likes.length}
+            </span>{" "}
+            Likes
+          </span>
+        </div>
+        <InteractionButtons
+          style={{ justifyContent: "space-around" }}
+          displayLabels={false}
+          tweet={tweet}
+        />
+      </div>
+    );
+  } else {
+    <div></div>;
+  }
 }
 
-export default authenticatedRoute(Tweet, { pathAfterFailure: "/login" })
+export default authenticatedRoute(Tweet, { pathAfterFailure: "/login" });

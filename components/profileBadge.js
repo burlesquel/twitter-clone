@@ -10,7 +10,7 @@ export default function ProfileBadge({ className, followable = false, user, ...p
       <div className={`${styles.profileContainer} ${className}`}>
 
         <div className={styles.profileImage}>
-          <Image src={user?.media?.profile_photo_uri ? user?.media?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" />
+          <Image src={user?.media?.profile_photo_uri ? user?.media?.profile_photo_uri : "https://picsum.photos/200"} layout="fill" objectFit='cover' />
         </div>
 
         <div className={styles.userNames}>
