@@ -31,10 +31,7 @@ function Tweets({ query, profile_id }) {
         setTweets(newArray)
     }
     function removeTweet(tweet) {
-        console.log("removing tweet: ", tweet);
-        console.log("original tweets before removing tweet: ", tweets);
         const newArray = tweets.filter(tweet_ => tweet_._id !== tweet._id)
-        console.log("new array:", newArray);
         setTweets(newArray)
     }
 
@@ -47,7 +44,6 @@ function Tweets({ query, profile_id }) {
 
     function handleLoadMore(page_, refresh = false) {
 	setHasNextPage(false);
-        console.log("getting more data, page:", page_);
         if (!loading) {
             setLoading(true);
             Server.getTweets({ ...query, limit: limit, page: page_ * limit }).then(res => {
@@ -75,11 +71,8 @@ function Tweets({ query, profile_id }) {
         }
     }, [tweets])
 
-    console.log("TWEETS ", tweets);
-
     if (tweets.length !== 0) {
         return (
-
 
             <div style={{ minHeight: "200vh", overflow:"auto" }}>
                 <InfiniteScroll
