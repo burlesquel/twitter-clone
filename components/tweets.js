@@ -46,6 +46,7 @@ function Tweets({ query, profile_id }) {
     }
 
     function handleLoadMore(page_, refresh = false) {
+	setHasNextPage(false);
         console.log("getting more data, page:", page_);
         if (!loading) {
             setLoading(true);
