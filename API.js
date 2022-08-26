@@ -1,5 +1,5 @@
 import axios from "axios";
-const api_url = "https://twtr-clone-server.herokuapp.com"
+const api_url = "https://twitter-clone-server.onrender.com"
 //const api_url = "http://localhost:5000"
 
 const Server = {
