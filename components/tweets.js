@@ -80,7 +80,7 @@ function Tweets({ query, profile_id }) {
         return (
 
 
-            <div style={{ minHeight: "100vh" }}>
+            <div style={{ minHeight: "200vh", overflow:"auto" }}>
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={handleLoadMore}
