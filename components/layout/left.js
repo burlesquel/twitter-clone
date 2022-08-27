@@ -47,7 +47,7 @@ export default function Left({ className }) {
   const context = useContext(Context)
   return (
     // width: 26%
-    <nav className={className}>
+    <nav className={`${className} ${styles.main}`}>
 
       <div className={styles.nav}>
         <LeftItem className={` ${styles.twitterBird}`} icon_name={"twitter"} dir={"home"} />

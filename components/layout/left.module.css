@@ -1,3 +1,8 @@
+.main{
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
 .nav {
     height: 100%;
     display: flex;
@@ -59,7 +64,11 @@
     background-color: hsl(204, 79%, 48%)
 }
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: 1050px) {
+    .main{
+        padding: 0;
+        align-items: flex-end;
+    }
     .leftItem > * > span {
         display: none;
         align-self: flex-end;

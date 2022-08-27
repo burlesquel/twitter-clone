@@ -50,7 +50,11 @@ export default function Right({ className }) {
   }, [])
 
   return (
-    <div className={className}>
+    <>
+    { currentPage === "messages" ? null 
+    :
+    
+      <div className={className}>
 
       <div className={styles.main} style={setStyleOfRightMain(currentPage, stick)}>
 
@@ -66,5 +70,7 @@ export default function Right({ className }) {
       </div>
 
     </div>
+    }
+    </>
   )
 }

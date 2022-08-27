@@ -98,4 +98,16 @@ export default function CenterHeaderBar({ className }) {
       </div>
     )
   }
+
+  else if (currentRoute.includes("messages")) {
+    return (
+      <div className={`${styles.messagesBar} ${styles.main}`}>
+
+        <div>
+        <h3>Messages</h3>
+        </div>
+
+      </div>
+    )
+  }
 }
