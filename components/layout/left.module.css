@@ -64,7 +64,7 @@
     background-color: hsl(204, 79%, 48%)
 }
 
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 1000px) {
     .main{
         padding: 0;
         align-items: flex-end;
