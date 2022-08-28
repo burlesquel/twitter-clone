@@ -56,6 +56,11 @@ export default function Login() {
             <div onClick={() => { setPopup("sign-in") }} className={`${styles.buttonBox} ${styles.hoverTrans}`}>Sign in</div>
           </div>
 
+
+          <div>
+            <h4> This website is only made for training purposes. It does not claim to be a replace of Twitter. </h4>
+          </div>
+
         </div>
       </div>
     )
