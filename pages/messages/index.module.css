@@ -5,7 +5,9 @@
 }
 
 .left{
-    width: 40%;
+    /* width: 24.8rem; */
+    flex:0 0 24.8rem;
+    /* width: 40%; */
     height: 100%;
     border-right: 1px #f0f4f5 solid;
     display: flex;
@@ -20,7 +22,20 @@
 }
 
 .right{
-    width: 60%;
+    /* width: 37.2rem; */
+    flex:0 0 37.2rem;
+    /* width: 60%; */
     height: 100%;
 }
 
+@media only screen and (max-width: 1090px){
+    .left{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    .right{
+        flex:1;
+    }
+}

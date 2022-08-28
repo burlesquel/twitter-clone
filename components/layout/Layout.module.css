@@ -33,8 +33,8 @@
 }
 
 .centerMessageScreen{
-    width: 62rem;
-    max-width: 90%;
+    /* width: 62rem; */
+    flex:0 0 62rem;
 }
 
 /* 40 */
@@ -55,6 +55,19 @@
     }
 } */
 
+@media only screen and (max-width: 1300px){
+    .container{
+        gap:0
+    }
+}
+
+
+@media only screen and (max-width: 1090px){
+    .centerMessageScreen{
+        flex:0 1 37.2rem
+    }
+}
+
 @media only screen and (max-width: 940px) {
     .rightMain {
         display: none;
@@ -71,11 +84,10 @@
 
     .container {
         justify-content: center;
-        gap: 0;
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 700px) {
     .container{
         flex-direction: column-reverse;
     }
@@ -83,6 +95,12 @@
     .center{
         width: 100%;
         flex:unset
+    }
+
+    .centerMessageScreen{
+        background-color: yellow;
+        width: auto;
+        flex:auto
     }
 
     .leftMain{
